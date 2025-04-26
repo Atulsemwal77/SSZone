@@ -3,10 +3,11 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/image/logo.png";
 import { Heart, ShoppingCart } from "lucide-react";
+import { useCart } from "../context/CartContext";
 
 function Navbaar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+  const { cartCount } = useCart();
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -42,7 +43,14 @@ function Navbaar() {
               <Heart className="w-4 h-4" />
             </Link>
             <Link to="/cart" className="w-8 h-8 rounded-full border flex items-center justify-center transition duration-300 ease-in-out hover:scale-105 ">
-              <ShoppingCart className="w-4 h-4" />
+              <div className="relative">
+              <ShoppingCart  className="text-gray-700 w-4 h-4" />
+              {cartCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                  {cartCount}
+                </span>
+              )}
+            </div>
             </Link>
           </div>
 

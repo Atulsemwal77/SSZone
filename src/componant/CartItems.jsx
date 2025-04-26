@@ -1,94 +1,155 @@
-import { CiStar } from 'react-icons/ci'
-import image from '../assets/image/coursecard.jpg'
-import { FaStar } from 'react-icons/fa'
-import { MdCurrencyRupee } from 'react-icons/md'
-import { IoMdClose } from 'react-icons/io'
+import { FaStar } from 'react-icons/fa';
+import { useCart } from '../context/CartContext';
+import { MdCurrencyRupee } from 'react-icons/md';
+import { IoMdClose } from 'react-icons/io';
+import { useState } from 'react';
 
 function CartItems() {
+  const { cartItems, removeFromCart, subtotal } = useCart();
+  const [promoCode, setPromoCode] = useState('');
+  const [applied, setApplied] = useState(false);
+  const [discount, setDiscount] = useState(0);
+
+  const applyPromo = () => {
+    if (promoCode === '25BBUYVNJHV4774 ' && !applied) {
+      setDiscount(500);
+      setApplied(true);
+    }
+    else{
+      alert("wrong coupon code")
+    }
+  };
+
+  const removePromo = () => {
+    setDiscount(0);
+    setApplied(false);
+    setPromoCode('');
+  };
+
+  const total = subtotal - discount;
+
   return (
-    <div className='flex sm:flex-row flex-col font-[Manrope] gap-6'>
-        {/* left section */}
-      <div className=''>
-        <div className='w-[824px] h-[136px]  border-1 border-[#E3E3E3] rounded-[4px] p-5 flex flex-row justify-between items-center'>
-        <div className='flex flex-row gap-5'>
-            <div className='p-1'>
-                <img src={image} alt="" className='w-[127px] h-[80px] rounded-[4px]'/>
-            </div>
-            <div>
-                <h3 className='font-semibold text-[20px] leading-[100%] tracking-normal pb-1 text-[#292929]'>Full Stack Web Development</h3>
-                <p className='font-normal text-[14px] leading-[100%] tracking-normal text-[#6F6F6F] pb-2'>By Dylan Meringue</p>
-                <div className='flex items-center gap-1 pb-2'>
-                    <p className='font-bold text-[14px] leading-[100%] tracking-normal text-[#C08B00]'>4.5 </p>
-                    <FaStar className='text-[#FABF23]'/>
-                    <FaStar className='text-[#FABF23]'/>
-                    <FaStar className='text-[#FABF23]'/>
-                    <FaStar className='text-[#FABF23]'/>
-                    <FaStar className='text-[#FABF23]'/>
+    <div className="font-[Manrope]">
+      <div className="flex flex-col lg:flex-row gap-10 w-full max-w-[1440px] mx-auto">
+
+        <div className="flex-1 space-y-6">
+          {/* Dynamic Cart Message */}
+          {cartItems.length === 0 ? (
+            <p className='font-semibold text-[18px] leading-[100%] tracking-normal text-[#1C4ED9] pb-6'>
+              Your cart is empty
+            </p>
+          ) : (
+            <p className='font-semibold text-[18px] leading-[100%] tracking-normal text-[#1C4ED9] pb-6'>
+              {cartItems.length} {cartItems.length === 1 ? 'Course' : 'Courses'} in Cart
+            </p>
+          )}
+
+          {/* Course Items */}
+          {cartItems.map(course => (
+            <div key={course.id} className="w-full border border-[#E3E3E3] rounded-md p-5 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+              <div className="flex flex-col sm:flex-row gap-4">
+                <div className='p-2'>
+                  <img src={course.image} alt={course.title} className="w-[127px] h-[80px] rounded-md object-cover" />
                 </div>
-                <p className='font-medium text-[14px] leading-[100%] tracking-normal text-[#6F6F6F]'>
-                    <span className='pr-3'>*10.5 total hours</span>
-                    <span className='pr-3'>*30 Lectures</span>
-                    <span className='pr-3'>*All Levels</span>
+                <div>
+                  <h3 className="font-semibold text-lg text-[#292929] pb-1">{course.title}</h3>
+                  <p className="text-sm text-[#6F6F6F] pb-1">{course.author}</p>
+                  <div className="flex items-center gap-1 text-sm pb-1 text-[#C08B00] font-bold">
+                    {course.rating}
+                    {[...Array(5)].map((_, i) => (
+                      <FaStar key={i} className="text-[#FABF23] text-sm" />
+                    ))}
+                  </div>
+                  <p className="text-sm text-[#6F6F6F]">
+                    <span className="pr-3">• {course.duration}</span>
+                    <span className="pr-3">• {course.lectures} Lectures</span>
+                    <span className="pr-3">• All Levels</span>
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center text-lg text-[#232323]">
+                <MdCurrencyRupee className="text-[20px]" />
+                <p className="text-[18px]">{course.price}</p>
+              </div>
+              <button
+                onClick={() => removeFromCart(course.id)}
+                className="text-sm text-[#296AD2] font-medium hover:underline cursor-pointer"
+              >
+                Remove
+              </button>
+            </div>
+          ))}
+        </div>
+
+        {/* Order Summary */}
+        <div className="w-full lg:w-[400px] space-y-6">
+          <div className="border border-[#E3E3E3] rounded-md p-6">
+            <h3 className="font-bold text-lg text-[#1A1A1A] pb-5">Order Summary</h3>
+
+            <div className="flex justify-between pb-4">
+              <p className="font-semibold uppercase text-sm text-[#1A1A1A]">Subtotal</p>
+              <div className="flex items-center">
+                <MdCurrencyRupee className="text-[#232323]" />
+                <p className="font-semibold text-sm">{subtotal}</p>
+              </div>
+            </div>
+            <div className="flex justify-between pb-4">
+              <p className="font-normal uppercase text-sm text-[#1A1A1A]">Promo Discount</p>
+              <div className="flex items-center">
+                <MdCurrencyRupee className="text-[#232323]" />
+                <p className="text-sm">{discount}</p>
+              </div>
+            </div>
+            <div className="flex justify-between border-b pb-4 mb-5">
+              <p className="font-bold uppercase text-base text-[#1A1A1A]">Total</p>
+              <div className="flex items-center">
+                <MdCurrencyRupee className="text-[#232323]" />
+                <p className="font-bold text-sm">{total}</p>
+              </div>
+            </div>
+            <button className="w-full py-3 bg-[#296AD2] text-white font-medium rounded-md uppercase text-sm cursor-pointer">
+              Checkout
+            </button>
+          </div>
+
+          {/* Promotions */}
+          <div className="border border-[#E3E3E3] rounded-md p-6 space-y-5">
+            <h3 className="font-bold text-lg text-[#1A1A1A]">Promotions</h3>
+
+            {applied && (
+              <div className="border border-dashed border-[#296AD2] p-3 rounded-md flex justify-between items-center">
+                <p className="text-sm font-semibold">
+                  LEARN500 <span className="font-normal text-[#6F6F6F]">is applied<br />Udemy coupon</span>
                 </p>
-            </div>
-        </div>
-        <div className='flex items-center'>
-            <MdCurrencyRupee className='text-[#232323] text-[20px]'/>
-            <p className='font-normal text-[18px] leading-[100%] tracking-normal'>4,999</p>
-        </div>
-        <p className='font-medium text-[14px] leading-[100%] tracking-normal text-[#296AD2]'>Remove</p>
-      </div>
-      </div>
-      {/* right section */}
-      <div className='w-[400px]'>
-        {/* top section */}
-        <div className='pb-6'>
-            <div className='p-6 border-1 rounded-[4px] border-[#E3E3E3]'>
-                <h3 className='font-bold text-[20px] leading-[100%] tracking-normal text-[#1A1A1A] pb-5 p-3'>Order Summary</h3>
-                <div className='flex justify-between flex-row p-3 pb-5'>
-                    <p className='font-semibold text-[16px] leading-[100%] tracking-normal text-[#1A1A1A] uppercase'>Subtotal</p>
-                    <div className='flex items-center'>
-                        <MdCurrencyRupee className='text-[#232323] text-[20px]'/>
-                        <p className='font-semibold text-[16px] leading-[100%] tracking-normal text-[#232323]'>9,998</p>
-                    </div>
-                </div>
-                <div className='flex justify-between flex-row p-3 pb-5'>
-                    <p className='font-normal text-[16px] leading-[100%] tracking-normal text-[#1A1A1A] uppercase'>total promo</p>
-                    <div className='flex items-center'>
-                        <MdCurrencyRupee className='text-[#232323] text-[20px]'/>
-                        <p className='font-normal text-[16px] leading-[100%] tracking-normal text-[#232323]'>500</p>
-                    </div>
-                </div>
-                <div className='flex justify-between flex-row p-3 border-b-1 mb-5'>
-                    <p className='font-bold text-[18px] leading-[100%] tracking-normal text-[#1A1A1A] uppercase'>total</p>
-                    <div className='flex items-center'>
-                        <MdCurrencyRupee className='text-[#232323] text-[20px]'/>
-                        <p className='font-bold text-[16px] leading-[100%] tracking-normal text-[#232323]'>9498</p>
-                    </div>
-                </div>
-                <button className='py-3 px-6 rounded-[4px] bg-[#296AD2] font-medium text-[16px] leading-[100%] tracking-normal w-full uppercase text-[#FFFFFF]'>Checkout</button>
-            </div>
-        </div>
-        {/* bottom section */}
-        <div className='p-6 border-1 rounded-[4px] border-[#E3E3E3]'>
-            <h3 className='font-bold text-[20px] leading-[100%] tracking-normal text-[#1A1A1A] pb-5 p-3'>Promotions</h3>
-            <div className='border-1 border-dashed p-3 border-[#296AD2]'>
-                <div className='flex justify-between items-center'>
-                    <p className='font-semibold text-[16px] leading-[100%] tracking-normal'>25BBUYVNJHV4774<span className='font-normal text-[#6F6F6F]'> is applied
-                    Udemy coupon</span></p>
-                    <p className='bg-[#EBF5FF] p-2'><IoMdClose className='text-[#296AD2] text-[24px]'/></p>
-                </div>
-            </div>
-            <div className='pt-5'>
-                <div className='flex justify-between items-center gap-4'>
-                    <input type="text" placeholder='Enter Coupon' className='p-2 border-1 border-[#DEE0E4]'/>
-                    <button className='py-3 px-6 bg-[#296AD2] text-[#ffffff] rounded-[4px] font-medium text-[16px] leading-[100%] tracking-normal'>Apply</button>
-                </div>
-            </div>
+                <button onClick={removePromo} className="bg-[#EBF5FF] p-1 rounded">
+                  <IoMdClose className="text-[#296AD2] text-xl" />
+                </button>
+              </div>
+            )}
+
+            {/* Apply New Coupon */}
+            {!applied && (
+              <div className="flex gap-3">
+                <input
+                  type="text"
+                  placeholder="Enter Coupon"
+                  value={promoCode}
+                  onChange={(e) => setPromoCode(e.target.value)}
+                  className="flex-1 p-2 border border-[#DEE0E4] rounded-md text-sm"
+                />
+                <button
+                  onClick={applyPromo}
+                  className="py-2 px-5 bg-[#296AD2] text-white rounded-md text-sm font-medium cursor-pointer"
+                >
+                  Apply
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default CartItems
+export default CartItems;
