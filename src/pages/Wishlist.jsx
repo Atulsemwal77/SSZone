@@ -3,7 +3,7 @@ import Banner from '../componant/Banner'
 import Card from '../componant/Card'
 function Wishlist() {
   return (
-    <div className='max-w-[1440px] w-full flex flex-col gap-[30px]'>
+    <div className='w-full flex flex-col gap-[30px]'>
         <Banner
           title="Wishlist"
           description="Keep track of the courses you love and save them for later.

@@ -5,7 +5,7 @@ import hero from '../assets/image/contactbanner.png'
 
 function Contact() {
   return (
-    <div className='max-w-[1440px] w-full flex flex-col gap-[30px]'>
+    <div className='w-full flex flex-col gap-[30px]'>
         <Banner
           title="Contact Us"
           description="Have questions or need support? We’re here to help! Reach out to our team for assistance,
@@ -14,7 +14,7 @@ function Contact() {
         />
         <ContactForm/>
         <div className='w-full h-[555px] py-[30px]'>
-          <img src={map} alt="map" />
+          <img src={map} alt="map" className='w-full'/>
         </div>
     </div>
   )
