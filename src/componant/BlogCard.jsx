@@ -15,8 +15,8 @@ function BlogCard({ title, description, date, image }) {
         <p className="text-sm text-gray-600 mb-4">{description}</p>
         <div className="flex items-center justify-between text-sm text-gray-500">
           <div className="flex items-center gap-1">
-            <CalendarDays className="w-4 h-4" />
-            <span>{date}</span>
+            <CalendarDays className="w-4 h-4 " />
+            <p className=" font-bold">{date}</p>
           </div>
           <Link to="/" className="text-blue-600 hover:underline font-medium flex items-center  gap-1">
             Read More <ArrowRight  size={16} className="mt-[3px]" />
