@@ -398,7 +398,8 @@ function Home() {
                 OUR BLOG
               </p>
             </div>
-            <div>
+            <div> 
+             
               <h1 className="text-3xl font-bold justify-self-center  py-3">
                 Latest Blogs
               </h1>
