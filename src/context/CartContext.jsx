@@ -2,8 +2,10 @@ import React, { createContext, useContext, useReducer } from 'react';
 
 const CartContext = createContext();
 
+
 const initialState = {
   cartItems: [],
+  wishlistItems: [], 
 };
 
 function cartReducer(state, action) {
@@ -16,6 +18,19 @@ function cartReducer(state, action) {
         ...state,
         cartItems: [...state.cartItems, action.payload],
       };
+      case 'TOGGLE_WISHLIST':
+        const exists = state.wishlistItems.find(item => item.id === action.payload.id);
+        if (exists) {
+          return {
+            ...state,
+            wishlistItems: state.wishlistItems.filter(item => item.id !== action.payload.id),
+          };
+        } else {
+          return {
+            ...state,
+            wishlistItems: [...state.wishlistItems, action.payload],
+          };
+        }
     case 'REMOVE_FROM_CART':
       return {
         ...state,
@@ -32,6 +47,10 @@ export function CartProvider({ children }) {
   const addToCart = course => {
     dispatch({ type: 'ADD_TO_CART', payload: course });
   };
+  const toggleWishlist = course => {
+    dispatch({ type: 'TOGGLE_WISHLIST', payload: course });
+  };
+  
   const removeFromCart = id => dispatch({ type: 'REMOVE_FROM_CART', payload: id });
 
   const subtotal = state.cartItems.reduce((acc, item) => acc + item.price, 0);
@@ -41,7 +60,17 @@ export function CartProvider({ children }) {
 
 
   return (
-    <CartContext.Provider value={{ cartItems: state.cartItems, addToCart, removeFromCart, subtotal, promo, total, cartCount }}>
+    <CartContext.Provider value={{
+       cartItems: state.cartItems,
+        addToCart,
+        removeFromCart,
+        subtotal,
+        promo,
+        total,
+        cartCount,
+        wishlistItems: state.wishlistItems,
+        toggleWishlist,
+         }}>
       {children}
     </CartContext.Provider>
   );
