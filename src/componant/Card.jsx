@@ -2,10 +2,10 @@ import { FaHeart, FaRegClock, FaRegHeart, FaRegStar } from 'react-icons/fa'
 import { MdCurrencyRupee } from 'react-icons/md'
 import { TiDocumentText } from 'react-icons/ti'
 import { useCart } from '../context/CartContext'
+import { Link } from 'react-router-dom'
 
 function Card({all_course}) {
   const { addToCart, toggleWishlist, wishlistItems } = useCart();
-import { Link } from 'react-router-dom'
 
   return (
     <>
