@@ -36,19 +36,19 @@ function BlogCard({ blog, handleBlogClick }) {
 
   return (
     <div
-      className="cursor-pointer  rounded-lg overflow-hidden hover:shadow-lg transition-shadow flex flex-col py-4 px-6 gap-4 items-center ml-0   shadow-md"
+      className="cursor-pointer  rounded-lg overflow-hidden hover:shadow-lg transition-shadow flex flex-col py-4 px-6 gap-4 items-start    shadow-md relative  min-h-[500px]  "
       onClick={() => handleBlogClick(blog)}
     >
-      <img src={blog.image} alt={blog.title} className=" h-48 object-cover  " />
-      <h1 className="text-xl font-semibold text-gray-800 mb-2 place-self-start" >
+      <img src={blog.image} alt={blog.title} className=" h-62 object-cover w-full rounded-xl px-2  " />
+      <h1 className="text-3xl font-semibold text-gray-800 mb-2 " >
         {blog.title}
       </h1>
 
-      <h3 className="text-gray-600 text-sm mb-4 place-self-start sm:w-full">
+      <h3 className="text-gray-600 text-lg" >
         {blog.description}
       </h3>
 
-      <div className='flex justify-between items-center gap-3  flex-col sm:flex-row w-full ' >
+      <div className='flex justify-between items-center gap-3   flex-col sm:flex-row w-full absolute bottom-5 translate-x-1/2 right-1/2 px-4  ' >
         <p className="text-gray-600 text-sm">{blog.date}</p>
         <button
           className="text-blue-600 font-medium hover:underline flex items-center"
