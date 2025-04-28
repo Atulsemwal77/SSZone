@@ -11,7 +11,7 @@ function CartItems() {
   const [discount, setDiscount] = useState(0);
 
   const applyPromo = () => {
-    if (promoCode === '25BBUYVNJHV4774 ' && !applied) {
+    if (promoCode === '25BBUYVNJHV4774' && !applied) {
       setDiscount(500);
       setApplied(true);
     }
@@ -119,10 +119,10 @@ function CartItems() {
             {applied && (
               <div className="border border-dashed border-[#296AD2] p-3 rounded-md flex justify-between items-center">
                 <p className="text-sm font-semibold">
-                  LEARN500 <span className="font-normal text-[#6F6F6F]">is applied<br />Udemy coupon</span>
+                25BBUYVNJHV4774 <span className="font-normal text-[#6F6F6F]">is applied<br />Udemy coupon</span>
                 </p>
                 <button onClick={removePromo} className="bg-[#EBF5FF] p-1 rounded">
-                  <IoMdClose className="text-[#296AD2] text-xl" />
+                  <IoMdClose className="text-[#296AD2] text-xl cursor-pointer" />
                 </button>
               </div>
             )}
