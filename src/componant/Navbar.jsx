@@ -7,7 +7,7 @@ import { useCart } from "../context/CartContext";
 
 function Navbaar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { cartCount } = useCart();
+  const { cartCount, wishlistItems } = useCart();
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -40,13 +40,20 @@ function Navbaar() {
         <div className="hidden lg:flex items-center gap-5  ">
           <div className="flex gap-5">
             <Link to="/wishlist" className="w-8 h-8 rounded-full border flex items-center justify-center transition duration-300 ease-in-out hover:scale-105 ">
+              <div className="relative">
               <Heart className="w-4 h-4" />
+              {wishlistItems.length > 0 && (
+                <span className="absolute -top-3 -right-2 bg-red-500 text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">
+                  {wishlistItems.length}
+                </span>
+              )}
+              </div>
             </Link>
             <Link to="/cart" className="w-8 h-8 rounded-full border flex items-center justify-center transition duration-300 ease-in-out hover:scale-105 ">
               <div className="relative">
               <ShoppingCart  className="text-gray-700 w-4 h-4" />
               {cartCount > 0 && (
-                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                <span className="absolute -top-3 -right-2 bg-red-500 text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">
                   {cartCount}
                 </span>
               )}

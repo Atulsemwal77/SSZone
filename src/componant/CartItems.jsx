@@ -30,10 +30,9 @@ function CartItems() {
 
   return (
     <div className="font-[Manrope]">
-      <div className="flex flex-col lg:flex-row gap-10 w-full max-w-[1440px] mx-auto">
+      <div className="flex flex-col lg:flex-row gap-10 w-full">
 
-        <div className="flex-1 space-y-6">
-          {/* Dynamic Cart Message */}
+        <div className="flex-1 space-y-6 max-h-[500px] overflow-auto">
           {cartItems.length === 0 ? (
             <p className='font-semibold text-[18px] leading-[100%] tracking-normal text-[#1C4ED9] pb-6'>
               Your cart is empty
@@ -82,7 +81,7 @@ function CartItems() {
         </div>
 
         {/* Order Summary */}
-        <div className="w-full lg:w-[400px] space-y-6">
+        <div className="w-full lg:w-[400px] space-y-6 my-10">
           <div className="border border-[#E3E3E3] rounded-md p-6">
             <h3 className="font-bold text-lg text-[#1A1A1A] pb-5">Order Summary</h3>
 
@@ -127,9 +126,8 @@ function CartItems() {
               </div>
             )}
 
-            {/* Apply New Coupon */}
             {!applied && (
-              <div className="flex gap-3">
+              <div className="flex sm:flex-row flex-col gap-3">
                 <input
                   type="text"
                   placeholder="Enter Coupon"

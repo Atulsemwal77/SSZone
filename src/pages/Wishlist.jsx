@@ -1,6 +1,6 @@
 import hero from '../assets/image/wishlistbanner.jpg'
 import Banner from '../componant/Banner'
-import Card from '../componant/Card'
+import WishlistItems from '../componant/WhislistItems'
 function Wishlist() {
   return (
     <div className='w-full flex flex-col gap-[30px]'>
@@ -10,12 +10,13 @@ function Wishlist() {
           Easily access your favorite learning picks anytime, anywhere."
           image={hero}
         />
+        <div className='py-[30px] px-4 sm:px-10 md:px-24 font-[Manrope] flex flex-col'>
+          <p className='font-bold text-[18px] leading-[100%] tracking-normal text-[#1C4ED9] pb-2 text-center uppercase'>Our Wishlist</p>
+          <h1 className='font-semibold text-[48px] leading-[100%] tracking-normal text-[#292929] pb-2 text-center'>Save Your Favorite Courses</h1>
+          <p className='font-normal text-[18px] leading-[100%] tracking-normal text-[#6F6F6F] pb-10 text-center'>Keep all your favorite courses in one place and come back to learn anytime.</p>
+        </div>
 
-            <Card
-              pageTitle="Our Wishlist"
-              pageHeading="Save Your Favorite Courses"
-              pageSubHeading="Keep all your favorite courses in one place and come back to learn anytime."
-            />
+        <WishlistItems/>
     </div>
   )
 }
