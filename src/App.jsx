@@ -10,6 +10,10 @@ import Blog from "./pages/Blog";
 import BlogDetails from "./pages/BlogDetails";
 import Footer from "./componant/Footer";
 import AboutUs from "./pages/AboutUs";
+import CourseDetails from "./pages/courseDetails";
+import CourseDetailsCurriculum from "./pages/CourseDetailsCurriculum";
+import CourseDetailsInstructor from "./pages/CourseDetailsInstructor";
+import CourseDetailsReviews from "./pages/CourseDetailsReviews";
 
 function App() {
   return (
@@ -24,11 +28,16 @@ function App() {
         <Route path="/cart" element={<Cart />} />
         <Route path="/blogs" element={<Blog />} />
         <Route path="/blogs/:id" element={<BlogDetails />} />
+        <Route path="/courseDetailsOverview/:id" element={<CourseDetails />} />
+        <Route path="/CourseDetailsCurriculum" element={<CourseDetailsCurriculum/>}/>
+        <Route path="/CourseDetailsInstructor" element={<CourseDetailsInstructor/>}/>
+        <Route path="/CourseDetailsReviews" element={<CourseDetailsReviews/>}/>
        
       </Routes>
       <Footer/>
     </>
   );
 }
+
 
 export default App;

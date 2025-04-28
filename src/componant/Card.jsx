@@ -3,6 +3,7 @@ import { MdCurrencyRupee } from 'react-icons/md'
 import { TiDocumentText } from 'react-icons/ti'
 import { useCart } from '../context/CartContext'
 import all_course from '../assets/Course_Data'
+import { Link } from 'react-router-dom'
 
 function Card({pageTitle, pageHeading, pageSubHeading}) {
   const { addToCart } = useCart()
@@ -14,6 +15,7 @@ function Card({pageTitle, pageHeading, pageSubHeading}) {
         <p className='font-normal text-[18px] leading-[100%] tracking-normal text-[#6F6F6F] pb-10 text-center'>{pageSubHeading}</p>
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6'>
       {all_course.map((course, index)=>(
+        < Link to={`/courseDetailsOverview/${course.id}`} state={course}>
         <div key={index} className='max-w-[400px] max-h-[499px] border-1 rounded-[12px] p-4 border-[#E3E3E3] hover:border-[#296AD2] flex flex-col gap-4'>
         {/* image section */}
           <div className='relative w-full'>
@@ -50,8 +52,10 @@ function Card({pageTitle, pageHeading, pageSubHeading}) {
           </div>
           <button onClick={() => addToCart(course)}
           className='py-3 cursor-pointer px-6 border-1 hover:bg-[#296AD2] hover:text-[#ffffff] border-[#296AD2] text-[#296AD2] font-medium text-[16px] tracking-normal items-center rounded-[4px]'>Enroll Now</button>
+            
         </div>
       </div>
+      </Link>
       ))}
     </div>
     </div>
