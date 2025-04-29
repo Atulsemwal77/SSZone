@@ -22,6 +22,8 @@ import blogimg from '../assets/image/card.jpg'
 import CourseCard from "../componant/CourseCard";
 // import company from "../assets/image/company.png";
 import BlogCard from "../componant/BlogCard";
+import Card from "../componant/Card";
+import all_course from "../assets/Course_Data";
 
 const courses = [
   {
@@ -221,8 +223,8 @@ const faqs = [
 ];
 
 const categories = [
-  "All Categories",
   "Trending",
+  "All Categories",
   "Design",
   "Marketing",
   "Programming",
@@ -241,10 +243,15 @@ function Home() {
     }
   };
 
+  // const filteredCourses =
+  //   active === "All Categories"
+  //     ? courses
+  //     : courses.filter((course) => course.category === active);
+
   const filteredCourses =
-    active === "All Categories"
-      ? courses
-      : courses.filter((course) => course.category === active);
+  active === "All Categories"
+    ? all_course.slice(0,6)
+    : all_course.filter((course) => course.category === active);
 
   return (
     <div>
@@ -394,7 +401,7 @@ function Home() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-self-center ">
+          {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-self-center ">
             {filteredCourses.map((course, index) => (
               <CourseCard
                 key={index}
@@ -407,7 +414,12 @@ function Home() {
                 price={course.price}
               />
             ))}
-          </div>
+          </div> */}
+
+          <Card
+            all_course={filteredCourses}
+          />
+
           <button className="bg-blue-600 hover:bg-blue-700 mt-5 text-white px-6 py-3 rounded-lg flex items-center justify-self-center gap-2 transition  cursor-pointer duration-300 ease-in-out  hover:scale-105 ">
             Explore All Courses <ArrowRight size={20} />
           </button>

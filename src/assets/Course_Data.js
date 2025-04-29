@@ -12,6 +12,7 @@ let all_course = [
       duration: "12 weeks",  
       author: "By Dylan Meringue",
       lectures: 30, 
+      category: "Trending"
     },
     {
         id: 2,
@@ -24,6 +25,7 @@ let all_course = [
         duration: "12 weeks",  
         author: "By Dylan Meringue",
         lectures: 30, 
+        category: "Trending"
       },
     {
         id: 3,
@@ -36,6 +38,7 @@ let all_course = [
         duration: "12 weeks",  
         author: "By Dylan Meringue",
         lectures: 30, 
+        category: "Design"
     },
     {
         id: 4,
@@ -48,6 +51,7 @@ let all_course = [
         duration: "12 weeks",  
         author: "By Dylan Meringue",
         lectures: 30, 
+        category: "Marketing"
     },
     {
         id: 5,
@@ -60,6 +64,7 @@ let all_course = [
         duration: "12 weeks",  
         author: "By Dylan Meringue",
         lectures: 30, 
+        category: "Design"
     },
     {
         id: 6,
@@ -72,6 +77,8 @@ let all_course = [
         duration: "12 weeks",  
         author: "By Dylan Meringue",
         lectures: 30, 
+        category: "Web Design"
+
     },
     {
         id: 7,
@@ -84,6 +91,7 @@ let all_course = [
         duration: "12 weeks",  
         author: "By Dylan Meringue",
         lectures: 30, 
+        category: "Design"
     },
     {
         id: 8,
@@ -96,6 +104,7 @@ let all_course = [
         duration: "12 weeks",  
         author: "By Dylan Meringue",
         lectures: 30, 
+        category: "Marketing"
     },
     {
         id: 9,
@@ -108,6 +117,7 @@ let all_course = [
         duration: "12 weeks",  
         author: "By Dylan Meringue",
         lectures: 30, 
+        category: "trending"
     },
     {
         id: 10,
@@ -120,6 +130,7 @@ let all_course = [
         duration: "12 weeks",  
         author: "By Dylan Meringue",
         lectures: 30, 
+        category: "Marketing"
     },
     {
         id: 11,
@@ -132,6 +143,7 @@ let all_course = [
         duration: "12 weeks",  
         author: "By Dylan Meringue",
         lectures: 30, 
+        category: "Web Design"
     },
     {
         id: 12,
@@ -144,6 +156,7 @@ let all_course = [
         duration: "12 weeks",  
         author: "By Dylan Meringue",
         lectures: 30, 
+        category: "Programming"
     },
 ]
 
