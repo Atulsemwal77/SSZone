@@ -57,6 +57,8 @@ export function CartProvider({ children }) {
   const promo = 500;
   const total = subtotal - promo;
   const cartCount = state.cartItems.length;
+  const wishlistCount = state.wishlistItems.length;
+
 
 
   return (
@@ -70,6 +72,7 @@ export function CartProvider({ children }) {
         cartCount,
         wishlistItems: state.wishlistItems,
         toggleWishlist,
+        wishlistCount,
          }}>
       {children}
     </CartContext.Provider>
