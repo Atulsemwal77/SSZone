@@ -15,7 +15,7 @@ function Card({all_course}) {
             const isWishlisted = wishlistItems.find(item => item.id === course.id);
 
             return (
-              // < Link to={`/courseDetailsOverview/${course.id}`} state={course}>
+              < Link to={`/courseDetailsOverview/${course.id}`} state={course}>
         <div key={index} className='max-w-[400px] max-h-[499px] border-1 rounded-[12px] p-4 border-[#E3E3E3] hover:border-[#296AD2] flex flex-col gap-4'>
                 {/* image section */}
                 <div className='relative w-full'>
@@ -64,7 +64,7 @@ function Card({all_course}) {
                     
         </div>
               </div>
-            // </Link>
+            </Link>
       )
           })}
         </div>
