@@ -4,8 +4,10 @@ import { Heart, ShoppingCart } from "lucide-react";
 import { FaBars, FaTimes } from "react-icons/fa"; // React Icons for hamburger and cross
 
 import logo from "../assets/image/logo.png";
+import { useCart } from "../context/CartContext";
 
 function Navbaar() {
+  const {cartCount, wishlistCount} = useCart();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -63,13 +65,27 @@ function Navbaar() {
               to="/wishlist"
               className="w-8 h-8 rounded-full border flex items-center justify-center transition duration-300 ease-in-out hover:scale-105"
             >
-              <Heart className="w-4 h-4" />
+              <div className="relative cursor-pointer">
+                <Heart className="w-4 h-4" />
+                {wishlistCount > 0 && (
+                <div className="absolute -top-3 -right-2 bg-red-600 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">
+                  <span>{wishlistCount}</span>
+                </div>
+                )}
+              </div>
             </NavLink>
             <NavLink
               to="/cart"
               className="w-8 h-8 rounded-full border flex items-center justify-center transition duration-300 ease-in-out hover:scale-105"
             >
+            <div className="relative cursor-pointer">
               <ShoppingCart className="w-4 h-4" />
+              {cartCount > 0 && (
+              <div className="absolute -top-3 -right-2 bg-red-600 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">
+                <span>{cartCount}</span>
+              </div>
+              )}
+            </div>
             </NavLink>
           </div>
 
