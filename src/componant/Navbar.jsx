@@ -1,18 +1,23 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Heart, ShoppingCart } from "lucide-react";
-import { FaBars, FaTimes } from "react-icons/fa"; // React Icons for hamburger and cross
+import { FaBars, FaTimes } from "react-icons/fa";
 
 import logo from "../assets/image/logo.png";
 import { useCart } from "../context/CartContext";
 
 function Navbaar() {
-  const {cartCount, wishlistCount} = useCart();
+  const { cartCount, wishlistCount } = useCart();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
+
+  const getNavLinkClass = ({ isActive }) =>
+    isActive
+      ? "text-primary font-semibold"
+      : "text-gray-700 hover:text-primary";
 
   return (
     <nav className="bg-white shadow-sm mx-auto px-4">
@@ -22,39 +27,19 @@ function Navbaar() {
         </NavLink>
 
         <div className="hidden lg:flex items-center gap-6">
-          <NavLink
-            to="/"
-            className="text-gray-700 hover:text-primary"
-            activeClassName="text-primary font-semibold"
-          >
+          <NavLink to="/" className={getNavLinkClass}>
             Home
           </NavLink>
-          <NavLink
-            to="/about"
-            className="text-gray-700 hover:text-primary"
-            activeClassName="text-primary font-semibold"
-          >
+          <NavLink to="/about" className={getNavLinkClass}>
             About us
           </NavLink>
-          <NavLink
-            to="/courses"
-            className="text-gray-700 hover:text-primary"
-            activeClassName="text-primary font-semibold"
-          >
+          <NavLink to="/courses" className={getNavLinkClass}>
             Courses
           </NavLink>
-          <NavLink
-            to="/blogs"
-            className="text-gray-700 hover:text-primary"
-            activeClassName="text-primary font-semibold"
-          >
+          <NavLink to="/blogs" className={getNavLinkClass}>
             Blog
           </NavLink>
-          <NavLink
-            to="/contact"
-            className="text-gray-700 hover:text-primary"
-            activeClassName="text-primary font-semibold"
-          >
+          <NavLink to="/contact" className={getNavLinkClass}>
             Contact us
           </NavLink>
         </div>
@@ -68,9 +53,9 @@ function Navbaar() {
               <div className="relative cursor-pointer">
                 <Heart className="w-4 h-4" />
                 {wishlistCount > 0 && (
-                <div className="absolute -top-3 -right-2 bg-red-600 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">
-                  <span>{wishlistCount}</span>
-                </div>
+                  <div className="absolute -top-3 -right-2 bg-red-600 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">
+                    <span>{wishlistCount}</span>
+                  </div>
                 )}
               </div>
             </NavLink>
@@ -78,14 +63,14 @@ function Navbaar() {
               to="/cart"
               className="w-8 h-8 rounded-full border flex items-center justify-center transition duration-300 ease-in-out hover:scale-105"
             >
-            <div className="relative cursor-pointer">
-              <ShoppingCart className="w-4 h-4" />
-              {cartCount > 0 && (
-              <div className="absolute -top-3 -right-2 bg-red-600 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">
-                <span>{cartCount}</span>
+              <div className="relative cursor-pointer">
+                <ShoppingCart className="w-4 h-4" />
+                {cartCount > 0 && (
+                  <div className="absolute -top-3 -right-2 bg-red-600 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">
+                    <span>{cartCount}</span>
+                  </div>
+                )}
               </div>
-              )}
-            </div>
             </NavLink>
           </div>
 
@@ -123,58 +108,32 @@ function Navbaar() {
       {isMenuOpen && (
         <div className="lg:hidden bg-white py-2 px-4">
           <div className="flex flex-col gap-2">
-            <NavLink
-              to="/"
-              onClick={() => setIsMenuOpen(false)}
-              className="py-2 text-gray-700 hover:text-primary"
-              activeClassName="text-primary font-semibold"
-            >
+            <NavLink to="/" onClick={toggleMenu} className={getNavLinkClass}>
               Home
             </NavLink>
-            <NavLink
-              to="/about"
-              onClick={() => setIsMenuOpen(false)}
-              className="py-2 text-gray-700 hover:text-primary"
-              activeClassName="text-primary font-semibold"
-            >
+            <NavLink to="/about" onClick={toggleMenu} className={getNavLinkClass}>
               About us
             </NavLink>
-            <NavLink
-              to="/courses"
-              onClick={() => setIsMenuOpen(false)}
-              className="py-2 text-gray-700 hover:text-primary"
-              activeClassName="text-primary font-semibold"
-            >
+            <NavLink to="/courses" onClick={toggleMenu} className={getNavLinkClass}>
               Courses
             </NavLink>
-            <NavLink
-              to="/blogs"
-              onClick={() => setIsMenuOpen(false)}
-              className="py-2 text-gray-700 hover:text-primary"
-              activeClassName="text-primary font-semibold"
-            >
+            <NavLink to="/blogs" onClick={toggleMenu} className={getNavLinkClass}>
               Blog
             </NavLink>
-            <NavLink
-              to="/contact"
-              onClick={() => setIsMenuOpen(false)}
-              className="py-2 text-gray-700 hover:text-primary"
-              activeClassName="text-primary font-semibold"
-            >
+            <NavLink to="/contact" onClick={toggleMenu} className={getNavLinkClass}>
               Contact us
             </NavLink>
             <div className="flex gap-4 pt-2">
               <NavLink
                 to="/signup"
-                onClick={() => setIsMenuOpen(false)}
+                onClick={toggleMenu}
                 className="flex-1 py-2 text-center border border-primary text-primary rounded-md hover:bg-blue-50"
               >
                 Sign up
               </NavLink>
-
               <NavLink
                 to="/login"
-                onClick={() => setIsMenuOpen(false)}
+                onClick={toggleMenu}
                 className="flex-1 py-2 text-center bg-blue-600 text-white rounded-md"
               >
                 Log in

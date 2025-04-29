@@ -10,16 +10,21 @@ import image2 from '../assets/image/pexels-julia-m-cameron-4144224 1.png'
 import { FaStar } from "react-icons/fa6";
 import { FaRegStarHalfStroke } from "react-icons/fa6";
 import { FaArrowRightLong } from "react-icons/fa6";
+import bgImage from "../assets/image/about.jpg"
 
 const AboutUs = () => {
     return (
         <>
-            <div className=''>
-                <img
-                    src="/src/assets/image/AboutUs.png"
-                    alt=""
-                    className='w-full'
-                />
+            <div
+                className="h-[60vh] w-full bg-cover bg-center flex items-center"
+                style={{ backgroundImage: `url(${bgImage})` }}
+            >
+                <div className=" p-8 rounded-lg  text-black md:w-1/2 w-full">
+                    <h1 className="md:text-5xl text-3xl font-bold mb-4">About Us</h1>
+                    <p className="md:text-lg text-sm leading-relaxed">
+                    At SSZone Technology, we’re dedicated to empowering learners with practical, career-ready skills. We provide flexible, expert-led training to help you enhance your expertise and advance your career, all at your own pace.
+                    </p>
+                </div>
             </div>
 
             <div className=" relative w-full overflow-hidden px-3">

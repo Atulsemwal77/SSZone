@@ -18,7 +18,7 @@ import tesla from "../assets/image/tesla.png";
 import Infosys from "../assets/image/Infosys.png";
 import image1 from "../assets/image/image04.png";
 import image2 from "../assets/image/pexels-julia-m-cameron-4144224 1.png";
-import blogimg from '../assets/image/card.jpg'
+import blogimg from "../assets/image/card.jpg";
 import CourseCard from "../componant/CourseCard";
 // import company from "../assets/image/company.png";
 import BlogCard from "../componant/BlogCard";
@@ -88,106 +88,70 @@ const courses = [
   },
 ];
 
-// const blog = [
-//   {
-//     title: "Introduction to JavaScript for the Beginner",
-//     description:
-//       "Learn the fundamentals of JavaScript from scratch and start building interactive web pages…",
-//     date: "10 Apr, 2025",
-//     image: blog1,
-//   },
-//   {
-//     title: "Why online Learning is the Key to Career Growth",
-//     description:
-//       "Understand React components, props, and state to build dynamic UIs.",
-//     date: "12 Apr, 2025",
-//     image: blog2,
-//   },
-//   {
-//     title: "Mastering Python: Beginner to Advanced Tips",
-//     description:
-//       "Level up your styling skills using Flexbox, Grid, and animations.",
-//     date: "15 Apr, 2025",
-//     image: blog3,
-//   },
-//   {
-//     title: "Introduction to JavaScript for the Beginner",
-//     description:
-//       "Learn the fundamentals of JavaScript from scratch and start building interactive web pages…",
-//     date: "10 Apr, 2025",
-//     image: blog1,
-//   },
-//   {
-//     title: "Why online Learning is the Key to Career Growth",
-//     description:
-//       "Understand React components, props, and state to build dynamic UIs.",
-//     date: "12 Apr, 2025",
-//     image: blog2,
-//   },
-//   {
-//     title: "Mastering Python: Beginner to Advanced Tips",
-//     description:
-//       "Level up your styling skills using Flexbox, Grid, and animations.",
-//     date: "15 Apr, 2025",
-//     image: blog3,
-//   },
-// ];
+const blogData = [
+  {
+    id: 1,
+    title: "Introduction to JavaScript for the Beginner",
+    description:
+      "Learn the fundamentals of JavaScript from scratch and start building interactive web pages...",
+    date: "10 Apr, 2025",
+    image: blogimg,
+    about:
+      "JavaScript is a versatile programming language that powers the web. In this blog, we will explore the basics of JavaScript, including variables, data types, functions, and control structures. By the end of this article, you will have a solid foundation to start your journey into web development.",
+  },
+  {
+    id: 2,
+    title: "Mastering React Hooks",
+    description:
+      "Dive deep into React Hooks and learn how to manage state and side effects in functional components...",
+    date: "18 Apr, 2025",
+    image: blogimg,
+    about:
+      "JavaScript is a versatile programming language that powers the web. In this blog, we will explore the basics of JavaScript, including variables, data types, functions, and control structures. By the end of this article, you will have a solid foundation to start your journey into web development.",
+  },
+  {
+    id: 3,
+    title: "Mastering React Hooks",
+    description:
+      "Dive deep into React Hooks and learn how to manage state and side effects in functional components...",
+    date: "18 Apr, 2025",
+    image: blogimg,
+    about:
+      "JavaScript is a versatile programming language that powers the web. In this blog, we will explore the basics of JavaScript, including variables, data types, functions, and control structures. By the end of this article, you will have a solid foundation to start your journey into web development.",
+  },
+  {
+    id: 4,
+    title: "Mastering React Hooks",
+    description:
+      "Dive deep into React Hooks and learn how to manage state and side effects in functional components...",
+    date: "18 Apr, 2025",
+    about:
+      "JavaScript is a versatile programming language that powers the web. In this blog, we will explore the basics of JavaScript, including variables, data types, functions, and control structures. By the end of this article, you will have a solid foundation to start your journey into web development.",
+    image: blogimg,
+  },
+  {
+    id: 5,
+    title: "Mastering React Hooks",
+    description:
+      "Dive deep into React Hooks and learn how to manage state and side effects in functional components...",
+    date: "18 Apr, 2025",
+    image: blogimg,
+    about:
+      "JavaScript is a versatile programming language that powers the web. In this blog, we will explore the basics of JavaScript, including variables, data types, functions, and control structures. By the end of this article, you will have a solid foundation to start your journey into web development.",
+  },
+  {
+    id: 6,
+    title: "Mastering React Hooks",
+    description:
+      "Dive deep into React Hooks and learn how to manage state and side effects in functional components...",
+    date: "18 Apr, 2025",
+    image: blogimg,
+    about:
+      "JavaScript is a versatile programming language that powers the web. In this blog, we will explore the basics of JavaScript, including variables, data types, functions, and control structures. By the end of this article, you will have a solid foundation to start your journey into web development.",
+  },
 
- const blogData = [
-        {
-            id: 1,
-            title: "Introduction to JavaScript for the Beginner",
-            description: "Learn the fundamentals of JavaScript from scratch and start building interactive web pages...",
-            date: "10 Apr, 2025",
-            image: blogimg,
-            about: "JavaScript is a versatile programming language that powers the web. In this blog, we will explore the basics of JavaScript, including variables, data types, functions, and control structures. By the end of this article, you will have a solid foundation to start your journey into web development.",
-        },
-        {
-            id: 2,
-            title: "Mastering React Hooks",
-            description: "Dive deep into React Hooks and learn how to manage state and side effects in functional components...",
-            date: "18 Apr, 2025",
-            image: blogimg,
-            about: "JavaScript is a versatile programming language that powers the web. In this blog, we will explore the basics of JavaScript, including variables, data types, functions, and control structures. By the end of this article, you will have a solid foundation to start your journey into web development.",
-        },
-        {
-            id: 3,
-            title: "Mastering React Hooks",
-            description: "Dive deep into React Hooks and learn how to manage state and side effects in functional components...",
-            date: "18 Apr, 2025",
-            image: blogimg,
-            about: "JavaScript is a versatile programming language that powers the web. In this blog, we will explore the basics of JavaScript, including variables, data types, functions, and control structures. By the end of this article, you will have a solid foundation to start your journey into web development.",
-        },
-        {
-            id: 4,
-            title: "Mastering React Hooks",
-            description: "Dive deep into React Hooks and learn how to manage state and side effects in functional components...",
-            date: "18 Apr, 2025",
-            about: "JavaScript is a versatile programming language that powers the web. In this blog, we will explore the basics of JavaScript, including variables, data types, functions, and control structures. By the end of this article, you will have a solid foundation to start your journey into web development.",
-            image: blogimg
-        },
-        {
-            id: 5,
-            title: "Mastering React Hooks",
-            description: "Dive deep into React Hooks and learn how to manage state and side effects in functional components...",
-            date: "18 Apr, 2025",
-            image: blogimg,
-            about: "JavaScript is a versatile programming language that powers the web. In this blog, we will explore the basics of JavaScript, including variables, data types, functions, and control structures. By the end of this article, you will have a solid foundation to start your journey into web development.",
-
-        },
-        {
-            id: 6,
-            title: "Mastering React Hooks",
-            description: "Dive deep into React Hooks and learn how to manage state and side effects in functional components...",
-            date: "18 Apr, 2025",
-            image: blogimg,
-            about: "JavaScript is a versatile programming language that powers the web. In this blog, we will explore the basics of JavaScript, including variables, data types, functions, and control structures. By the end of this article, you will have a solid foundation to start your journey into web development.",
-
-        },
-        
-        // Add more entries as needed
-    ];
-
+  // Add more entries as needed
+];
 
 const faqs = [
   {
@@ -249,9 +213,9 @@ function Home() {
   //     : courses.filter((course) => course.category === active);
 
   const filteredCourses =
-  active === "All Categories"
-    ? all_course.slice(0,6)
-    : all_course.filter((course) => course.category === active);
+    active === "All Categories"
+      ? all_course.slice(0, 6)
+      : all_course.filter((course) => course.category === active);
 
   return (
     <div>
@@ -416,9 +380,7 @@ function Home() {
             ))}
           </div> */}
 
-          <Card
-            all_course={filteredCourses}
-          />
+          <Card all_course={filteredCourses} />
 
           <button className="bg-blue-600 hover:bg-blue-700 mt-5 text-white px-6 py-3 rounded-lg flex items-center justify-self-center gap-2 transition  cursor-pointer duration-300 ease-in-out  hover:scale-105 ">
             Explore All Courses <ArrowRight size={20} />
@@ -490,33 +452,28 @@ function Home() {
                 />
               ))} */}
               {blogData.map((blog) => (
-                        <BlogCard
-                            key={blog.id}
-                            blog={blog}
-                            
-                        />
-                    ))}
+                <BlogCard key={blog.id} blog={blog} />
+              ))}
             </div>
           </div>
         </div>
 
-
-
         <div className=" ">
-        <div className="pt-10 justify-self-center items-center">
+          <div className="pt-10 justify-self-center items-center">
             <div>
               <p className="text-blue-700 font-bold justify-self-center    py-3">
-              Testimonials
+                Testimonials
               </p>
             </div>
             <div>
               <h1 className="text-3xl font-bold justify-self-center  py-3">
-              What Our Student Says About Us
+                What Our Student Says About Us
               </h1>
             </div>
             <div>
               <p className="justify-self-center  pt-3">
-              Hear real stories and experiences from students who’ve transformed their careers with our courses
+                Hear real stories and experiences from students who’ve
+                transformed their careers with our courses
               </p>
             </div>
           </div>
