@@ -1,28 +1,26 @@
-import React, { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useLocation, Link } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
 import { FaRegStarHalfStroke } from "react-icons/fa6";
-import { Link } from "react-router-dom";
+import { FaTwitter, FaDribbble, FaLinkedin } from "react-icons/fa";
+import CourseCard from "../componant/CourseCard";
 import arrow from "../assets/image/up_line 1.png";
 import video from "../assets/image/video.jpg";
-import { FaTwitter } from "react-icons/fa";
-import { FaDribbble } from "react-icons/fa";
-import { FaLinkedin } from "react-icons/fa";
-import CourseCard from "../componant/CourseCard";
 import card from "../assets/image/card.jpg";
 import right from "../assets/image/checkmark-circle-02.png";
+import avatar from "../assets/image/avatar.png";
 
 const CourseDetails = () => {
   const location = useLocation();
   const data = location.state;
+  const [activeTab, setActiveTab] = useState("Overview");
 
   const courses = [
     {
       image: card,
       duration: "12 weeks",
       title: "Full Stack Web Development",
-      description:
-        "Become a proficient full-stack developer with HTML, CSS, JavaScript, React.",
+      description: "Become a proficient full-stack developer with HTML, CSS, JavaScript, React.",
       lessons: 20,
       rating: 4.8,
       price: 4999,
@@ -31,8 +29,7 @@ const CourseDetails = () => {
       image: card,
       duration: "8 weeks",
       title: "Frontend Mastery",
-      description:
-        "Master frontend development with Tailwind, React, and performance techniques.",
+      description: "Master frontend development with Tailwind, React, and performance techniques.",
       lessons: 15,
       rating: 4.7,
       price: 3999,
@@ -41,13 +38,118 @@ const CourseDetails = () => {
       image: card,
       duration: "12 weeks",
       title: "Full Stack Web Development",
-      description:
-        "Become a proficient full-stack developer with HTML, CSS, JavaScript, React.",
+      description: "Become a proficient full-stack developer with HTML, CSS, JavaScript, React.",
       lessons: 20,
       rating: 4.8,
       price: 4999,
     },
   ];
+
+  const reviews = [
+    {
+      name: "Russell Sprout",
+      date: "April 19, 2025 AT 10:47 PM",
+      comment: "Great read for beginners! I finally understand how JavaScript fits in with HTML and CSS.",
+      rating: 4.5,
+      image: "/images/user1.jpg",
+    },
+    {
+      name: "Amelia Pond",
+      date: "April 20, 2025 AT 11:00 AM",
+      comment: "The examples helped me a lot! Thank you!",
+      rating: 5,
+      image: "/images/user2.jpg",
+    },
+    {
+      name: "John Smith",
+      date: "April 18, 2025 AT 09:15 PM",
+      comment: "Good course, but I wish there were more advanced topics.",
+      rating: 3.5,
+      image: "/images/user3.jpg",
+    },
+  ];
+
+  const content = {
+    Overview: (
+      <div className="px-6 md:px-12 my-6">
+        <h1 className="text-xl font-bold mb-4">Description</h1>
+        <p className="text-gray-600 mb-6">
+          Dive into the world of Full Stack Web Development and learn how to build complete, dynamic web applications from start to finish. ...
+        </p>
+        <div className="flex flex-col gap-4">
+          <h1 className="text-xl font-bold">What You Will Learn</h1>
+          {[
+            "Build responsive websites using HTML, CSS, and JavaScript.",
+            "Develop dynamic web applications with front-end frameworks.",
+            "Create and manage server-side logic with backend technologies.",
+            "Work with databases and perform CRUD operations.",
+            "Connect frontend and backend using RESTful APIs.",
+            "Deploy full stack applications to live servers.",
+            "Understand version control with Git and GitHub.",
+            "Gain real-world experience through hands-on projects."
+          ].map((item, index) => (
+            <p key={index} className="flex items-center gap-2">
+              <img src={right} alt="check" className="w-4 h-4" /> {item}
+            </p>
+          ))}
+        </div>
+      </div>
+    ),
+    Curriculum: (
+      <div className="px-6 md:px-12 my-6">
+        <h2 className="text-xl font-bold mb-4">Course Modules</h2>
+        <div className="flex flex-col gap-2 border border-gray-300 max-w-4xl">
+          {[
+            "Introduction to web development",
+            "Frontend Development - HTML, CSS, JS",
+            "Frontend Framework - React.js",
+            "Version Control with Git & GitHub",
+            "Backend Development with Node.js & Express",
+            "Databases - MongoDB",
+            "User Authentication & Authorization",
+            "Deployment & Hosting",
+            "Project Work"
+          ].map((module, index) => (
+            <h2 key={index} className="p-3 border-b flex justify-between items-center">
+              {module} <img src={arrow} alt="arrow" className="w-5" />
+            </h2>
+          ))}
+        </div>
+      </div>
+    ),
+    Instructor: (
+      <div className="px-6 md:px-12 my-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <img src={avatar} alt="Instructor" className="w-40 mx-auto md:mx-0" />
+          <div className="flex flex-col gap-3">
+            <h1 className="text-xl font-bold">Dylan Meringue</h1>
+            <p className="text-blue-500 font-semibold">Back-End Development</p>
+            <p className="text-gray-600">This course is designed to give learners a clear and practical understanding of back-end development...</p>
+          </div>
+        </div>
+      </div>
+    ),
+    Review: (
+      <div className="px-6 md:px-12 my-6">
+        {reviews.map((review, index) => (
+          <div key={index} className="flex flex-col md:flex-row items-start gap-4 mb-6">
+            <img src={review.image} alt={review.name} className="w-12 h-12 rounded-full object-cover" />
+            <div className="flex-1">
+              <h1 className="text-lg font-bold">{review.name}</h1>
+              <p className="text-sm text-gray-500">{review.date}</p>
+              <p className="mt-2 text-gray-700">{review.comment}</p>
+              <div className="flex gap-1 mt-2 text-amber-300">
+                {[...Array(Math.floor(review.rating))].map((_, i) => (
+                  <FaStar key={i} />
+                ))}
+                {review.rating % 1 !== 0 && <FaRegStarHalfStroke />}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    )
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -55,151 +157,92 @@ const CourseDetails = () => {
 
   return (
     <>
-      <div className="p-3 relative ">
-        <img
-          src={data.image}
-          alt="hero image"
-          className="h-[70vh] w-full px-4"
-        />
-        <div className="shadow-lg bg-white px-6 py-2 max-w-[800px] rounded-xl absolute bottom-0 left-2">
-          <h1 className="text-xl font-bold mb-3">{data.title}</h1>
-          <div className="flex gap-7 ">
-            <div className="pr-4 border-r  border-gray-300">
-              <h1>Insctucter</h1>
-              <p className="font-bold">Dylan Meringue</p>
+      {/* Banner Image */}
+      <div className="p-3">
+        <img src={data.image} alt="Course Banner" className="h-[50vh] md:h-[70vh] w-full object-cover rounded" />
+      </div>
+
+      {/* Course Info */}
+      <div className="relative  ">
+        <div className="shadow-lg bg-white px-6 py-4 max-w-4xl md:mx-20 mx-auto rounded-xl -mt-20 md:-mt-28">
+          <h1 className="text-2xl font-bold mb-3">{data.title}</h1>
+          <div className="flex flex-wrap md:flex-nowrap gap-6">
+            <div className="flex-1">
+              <h3 className="text-gray-500">Instructor</h3>
+              <p className="font-semibold">Dylan Meringue</p>
             </div>
-            <div className="pr-4 border-r border-gray-300">
-              <h1>Categories</h1>
-              <p className="font-bold">Oline Technique</p>
+            <div className="flex-1">
+              <h3 className="text-gray-500">Category</h3>
+              <p className="font-semibold">Online Technique</p>
             </div>
-            <div>
-              <h1>Review</h1>
-              <p className="flex justify-center items-center gap-2">
-                <FaStar className="text-xl text-amber-300" />
-                <FaStar className="text-xl text-amber-300" />
-                <FaStar className="text-xl text-amber-300" />
-                <FaStar className="text-xl text-amber-300" />
-                <FaRegStarHalfStroke className="text-xl text-amber-300" />
-              </p>
+            <div className="flex-1">
+              <h3 className="text-gray-500">Review</h3>
+              <div className="flex items-center gap-1 text-amber-300">
+                <FaStar /> <FaStar /> <FaStar /> <FaStar /> <FaRegStarHalfStroke />
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="p-2 border-b border-gray-300 flex justify-center items-center gap-8 max-w-[800px] my-4 mx-2">
-        <Link to="">Overview</Link>
-        <Link to="/CourseDetailsCurriculum">Curriculmn</Link>
-        <Link to="/CourseDetailsInstructor">Instructor</Link>
-        <Link to="/CourseDetailsReviews">Reviews</Link>
-      </div>
-
-      <div className=" relative">
-        <div className="max-w-[800px] pl-15 p-2">
-          <h1 className="text-xl font-bold">Description</h1>
-          <p className="my-4">
-            Dive into the world of Full Stack Web Development and learn how to
-            build complete, dynamic web applications from start to finish. This
-            course covers both front-end and back-end technologies, giving you a
-            solid foundation in HTML, CSS, JavaScript, server-side programming,
-            databases, APIs, and deployment. Whether you're designing
-            user-friendly interfaces or writing powerful server logic, you’ll
-            gain hands-on experience with real-world projects. Perfect for
-            beginners or aspiring developers looking to become versatile and
-            job-ready in the tech industry.
-          </p>
+      {/* Tabs */}
+      <div className="flex flex-col md:flex-row gap-8 px-6 md:px-12 my-12">
+        {/* Left Content */}
+        <div className="flex-1">
+          <div className="flex gap-4 border-b mb-6 overflow-x-auto">
+            {["Overview", "Curriculum", "Instructor", "Review"].map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setActiveTab(tab)}
+                className={`pb-2 md:px-4 px-3 font-medium ${
+                  activeTab === tab
+                    ? "border-b-2 border-blue-500 text-blue-500"
+                    : "border-transparent text-gray-600 hover:text-blue-500"
+                }`}
+              >
+                {tab}
+              </button>
+            ))}
+          </div>
+          <div>{content[activeTab]}</div>
         </div>
-        <div className="max-w-[600px] pl-15 p-2 flex flex-col  gap-4">
-          <h1 className="text-xl font-bold">What You Will Learn</h1>
-          <p className="flex items-center gap-2">
-            {" "}
-            <img src={right} alt="" className="size-4" /> Build responsive
-            websites using HTML, CSS, and JavaScript.
-          </p>
-          <p className="flex items-center gap-2">
-            {" "}
-            <img src={right} alt="" className="size-4" />
-            Develop dynamic web applications with front-end frameworks.
-          </p>
-          <p className="flex items-center gap-2">
-            {" "}
-            <img src={right} alt="" className="size-4" />
-            Create and manage server-side logic with backend technologies
-          </p>
-          <p className="flex items-center gap-2">
-            {" "}
-            <img src={right} alt="" className="size-4" />
-            Work with databases and perform CRUD operations.
-          </p>
-          <p className="flex items-center gap-2">
-            {" "}
-            <img src={right} alt="" className="size-4" />
-            Connect frontend and backend using RESTful APIs.
-          </p>
-          <p className="flex items-center gap-2">
-            {" "}
-            <img src={right} alt="" className="size-4" />
-            Deploy full stack applications to live servers.
-          </p>
-          <p className="flex items-center gap-2">
-            {" "}
-            <img src={right} alt="" className="size-4" />
-            Understand version control with Git and GitHub.
-          </p>
-          <p className="flex items-center gap-2">
-            {" "}
-            <img src={right} alt="" className="size-4" />
-            Gain real-world experience through hands-on projects.
-          </p>
-        </div>
-        <div className="max-w-[400px] shadow-xl bg-white p-5 rounded absolute right-10 top-[-20%]">
-          <img src={video} alt="video image" className="w-[100%]" />
 
-          <h2 className="font-bold text-center my-4">4,999</h2>
-          <button className="text-white bg-blue-700 px-12 py-2 rounded text-center my-4">
-            Add To Cart
-          </button>
+        {/* Sidebar */}
+        <div className="w-full md:w-[400px] flex-shrink-0 shadow-lg p-6 rounded-xl bg-white">
+          <img src={video} alt="Demo Video" className="rounded-md mb-6" />
+          <h2 className="text-2xl font-bold text-center mb-4">₹4,999</h2>
+          <button className="w-full bg-blue-700 text-white py-3 rounded-lg mb-6 hover:bg-blue-800">Add To Cart</button>
+          <div className="flex flex-col gap-2 text-gray-600">
+            <p>✅ 62 hours on-demand video</p>
+            <p>✅ Instructor: Dylan Meringue</p>
+            <p>✅ Language: English</p>
+            <p>✅ Level: Advanced</p>
+            <p>✅ Certificate of Completion</p>
+            <p>✅ Access on Mobile and TV</p>
+          </div>
 
-          <div className="flex flex-col gap-6">
-            <h2 className="text-xl font-bold">This Course Includes:</h2>
-            <p>62 hours on-demand video</p>
-            <p>Dylan meringue instructor</p>
-            <p>English language</p>
-            <p>Advanced level</p>
-            <p>Certificate of completion</p>
-            <p>Access on mobile and TV</p>
-            <div className="flex items-center gap-2">
-              <h3>Share it: </h3>
-              <Link
-                to=""
-                className="border  border-gray-300 p-2 rounded-full bg-gray-300"
-              >
-                <FaDribbble className="text-sm text-blue-700" />
-              </Link>
-              <Link
-                to=""
-                className="border  border-gray-300 p-2 rounded-full bg-gray-300"
-              >
-                <FaLinkedin className="text-sm text-blue-700" />
-              </Link>
-              <Link
-                to=""
-                className="border border-gray-300 p-2 rounded-full bg-gray-300"
-              >
-                <FaTwitter className="text-sm text-blue-700" />
-              </Link>
-            </div>
+          <div className="flex items-center gap-3 mt-6">
+            <h3 className="font-bold">Share:</h3>
+            <Link to="#" className="p-2 bg-gray-300 rounded-full">
+              <FaDribbble />
+            </Link>
+            <Link to="#" className="p-2 bg-gray-300 rounded-full">
+              <FaLinkedin />
+            </Link>
+            <Link to="#" className="p-2 bg-gray-300 rounded-full">
+              <FaTwitter />
+            </Link>
           </div>
         </div>
       </div>
 
-      <div className="flex flex-col justify-center items-center gap-2 my-20">
+      {/* Recommended Courses */}
+      <div className="px-6 md:px-12 my-20 text-center">
         <h2 className="text-blue-500 text-sm">Explore Recommended Courses</h2>
-        <h1 className="text-4xl">You Might Also Like</h1>
-        <p className="text-sm">
-          Discover personalized course recommendations curated to match your
-          interests and learning goals.
-        </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-self-center ">
+        <h1 className="text-3xl md:text-4xl font-bold mb-4">You Might Also Like</h1>
+        <p className="text-gray-600 mb-12">Discover personalized course recommendations curated to match your interests and learning goals.</p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {courses.map((course, index) => (
             <CourseCard
               key={index}
