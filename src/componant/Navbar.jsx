@@ -1,141 +1,168 @@
-import React from "react";
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import logo from "../assets/image/logo.png";
+import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
 import { Heart, ShoppingCart } from "lucide-react";
-import { useCart } from "../context/CartContext";
+import { FaBars, FaTimes } from "react-icons/fa"; // React Icons for hamburger and cross
+
+import logo from "../assets/image/logo.png";
 
 function Navbaar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { cartCount, wishlistItems } = useCart();
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
   return (
-    <nav className="bg-white shadow-sm mx-auto px-4  ">
-      <div className=" py-4 flex items-center justify-between mx-auto ">
-        <Link to="/" className="flex items-center gap-2">
-          <img src={logo} alt="" />
-        </Link>
+    <nav className="bg-white shadow-sm mx-auto px-4">
+      <div className="py-4 flex items-center justify-between mx-auto">
+        <NavLink to="/" className="flex items-center gap-2">
+          <img src={logo} alt="Site Logo" />
+        </NavLink>
 
         <div className="hidden lg:flex items-center gap-6">
-          <Link to="/" className="text-gray-700 hover:text-primary  ">
+          <NavLink
+            to="/"
+            className="text-gray-700 hover:text-primary"
+            activeClassName="text-primary font-semibold"
+          >
             Home
-          </Link>
-          <Link to="/about" className="text-gray-700 hover:text-primary">
+          </NavLink>
+          <NavLink
+            to="/about"
+            className="text-gray-700 hover:text-primary"
+            activeClassName="text-primary font-semibold"
+          >
             About us
-          </Link>
-          <Link to="/courses" className="text-gray-700 hover:text-primary">
+          </NavLink>
+          <NavLink
+            to="/courses"
+            className="text-gray-700 hover:text-primary"
+            activeClassName="text-primary font-semibold"
+          >
             Courses
-          </Link>
-          <Link to="/blogs" className="text-gray-700 hover:text-primary">
+          </NavLink>
+          <NavLink
+            to="/blogs"
+            className="text-gray-700 hover:text-primary"
+            activeClassName="text-primary font-semibold"
+          >
             Blog
-          </Link>
-          <Link to="/contact" className="text-gray-700 hover:text-primary">
+          </NavLink>
+          <NavLink
+            to="/contact"
+            className="text-gray-700 hover:text-primary"
+            activeClassName="text-primary font-semibold"
+          >
             Contact us
-          </Link>
+          </NavLink>
         </div>
 
-        <div className="hidden lg:flex items-center gap-5  ">
+        <div className="hidden lg:flex items-center gap-5">
           <div className="flex gap-5">
-            <Link to="/wishlist" className="w-8 h-8 rounded-full border flex items-center justify-center transition duration-300 ease-in-out hover:scale-105 ">
-              <div className="relative">
+            <NavLink
+              to="/wishlist"
+              className="w-8 h-8 rounded-full border flex items-center justify-center transition duration-300 ease-in-out hover:scale-105"
+            >
               <Heart className="w-4 h-4" />
-              {wishlistItems.length > 0 && (
-                <span className="absolute -top-3 -right-2 bg-red-500 text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">
-                  {wishlistItems.length}
-                </span>
-              )}
-              </div>
-            </Link>
-            <Link to="/cart" className="w-8 h-8 rounded-full border flex items-center justify-center transition duration-300 ease-in-out hover:scale-105 ">
-              <div className="relative">
-              <ShoppingCart  className="text-gray-700 w-4 h-4" />
-              {cartCount > 0 && (
-                <span className="absolute -top-3 -right-2 bg-red-500 text-white text-xs w-4 h-4 flex items-center justify-center rounded-full">
-                  {cartCount}
-                </span>
-              )}
-            </div>
-            </Link>
+            </NavLink>
+            <NavLink
+              to="/cart"
+              className="w-8 h-8 rounded-full border flex items-center justify-center transition duration-300 ease-in-out hover:scale-105"
+            >
+              <ShoppingCart className="w-4 h-4" />
+            </NavLink>
           </div>
 
           <div className="lg:flex items-center gap-5">
-            <Link
+            <NavLink
               to="/signup"
-              className="px-4 py-2 border border-primary text-primary rounded-md hover:bg-blue-50 transition duration-300 ease-in-out hover:scale-105 "
+              className="px-4 py-2 border border-primary text-primary rounded-md hover:bg-blue-50 transition duration-300 ease-in-out hover:scale-105"
             >
               Sign up
-            </Link>
-            <Link
+            </NavLink>
+            <NavLink
               to="/login"
-              className="px-5 py-2 bg-blue-500 text-white rounded-md transition duration-300 ease-in-out  hover:scale-105  "
+              className="px-5 py-2 bg-blue-500 text-white rounded-md transition duration-300 ease-in-out hover:scale-105"
             >
               Log in
-            </Link>
+            </NavLink>
           </div>
         </div>
 
-        <button className="lg:hidden text-gray-700    " onClick={toggleMenu}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M4 6h16M4 12h16M4 18h16"
-            />
-          </svg>
+        {/* Mobile Menu Icon */}
+        <button
+          className="lg:hidden text-gray-700"
+          onClick={toggleMenu}
+          aria-label="Toggle Menu"
+        >
+          {isMenuOpen ? (
+            <FaTimes className="h-6 w-6 text-gray-700" />
+          ) : (
+            <FaBars className="h-6 w-6 text-gray-700" />
+          )}
         </button>
       </div>
 
+      {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="lg:hidden bg-white py-2 px-4 ">
+        <div className="lg:hidden bg-white py-2 px-4">
           <div className="flex flex-col gap-2">
-            <Link to="/" className="py-2 text-gray-700 hover:text-primary">
-              Home
-            </Link>
-            <Link to="/about" className="py-2 text-gray-700 hover:text-primary">
-              About us
-            </Link>
-            <Link
-              to="/courses"
+            <NavLink
+              to="/"
+              onClick={() => setIsMenuOpen(false)}
               className="py-2 text-gray-700 hover:text-primary"
+              activeClassName="text-primary font-semibold"
+            >
+              Home
+            </NavLink>
+            <NavLink
+              to="/about"
+              onClick={() => setIsMenuOpen(false)}
+              className="py-2 text-gray-700 hover:text-primary"
+              activeClassName="text-primary font-semibold"
+            >
+              About us
+            </NavLink>
+            <NavLink
+              to="/courses"
+              onClick={() => setIsMenuOpen(false)}
+              className="py-2 text-gray-700 hover:text-primary"
+              activeClassName="text-primary font-semibold"
             >
               Courses
-            </Link>
-            <Link
+            </NavLink>
+            <NavLink
               to="/blogs"
+              onClick={() => setIsMenuOpen(false)}
               className="py-2 text-gray-700 hover:text-primary"
+              activeClassName="text-primary font-semibold"
             >
               Blog
-            </Link>
-            <Link
+            </NavLink>
+            <NavLink
               to="/contact"
+              onClick={() => setIsMenuOpen(false)}
               className="py-2 text-gray-700 hover:text-primary"
+              activeClassName="text-primary font-semibold"
             >
               Contact us
-            </Link>
+            </NavLink>
             <div className="flex gap-4 pt-2">
-              <Link
+              <NavLink
                 to="/signup"
+                onClick={() => setIsMenuOpen(false)}
                 className="flex-1 py-2 text-center border border-primary text-primary rounded-md hover:bg-blue-50"
               >
                 Sign up
-              </Link>
+              </NavLink>
 
-              <Link
+              <NavLink
                 to="/login"
-                className="flex-1 py-2 text-center bg-blue-600 text-white rounded-md "
+                onClick={() => setIsMenuOpen(false)}
+                className="flex-1 py-2 text-center bg-blue-600 text-white rounded-md"
               >
                 Log in
-              </Link>
+              </NavLink>
             </div>
           </div>
         </div>
