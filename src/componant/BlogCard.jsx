@@ -15,7 +15,7 @@ function BlogCard({ blog, handleBlogClick }) {
         className="h-62 w-full object-cover rounded-xl px-2"
       />
 
-      <h1 className="text-xl md:text-3xl font-semibold text-gray-800 mb-1 md:mb-2">
+      <h1 className="text-xl md:text-2xl font-semibold text-gray-800 mb-1 md:mb-2">
         {blog.title}
       </h1>
 

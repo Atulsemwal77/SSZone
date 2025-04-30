@@ -1,8 +1,12 @@
 import hero from "../assets/image/coursesbanner.jpg";
+import { useEffect } from "react";
 import Banner from "../componant/Banner";
 import Card from "../componant/Card";
 import all_course from "../assets/Course_Data";
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
+
+
 
 const categoriesButton = [
   "Trending",
@@ -26,9 +30,16 @@ function Courses() {
   };
 
   const filteredCourses =
-    active === "All Categories"
-      ? all_course
-      : all_course.filter((course) => course.category === active);
+  active === "All Categories"
+    ? all_course
+    : all_course.filter((course) => course.category === active)
+  ;
+  const location = useLocation();
+useEffect(() => {
+  window.scrollTo(0, 0);
+}, [location.pathname]);
+
+
 
   return (
     <>
@@ -37,7 +48,7 @@ function Courses() {
         style={{ backgroundImage: `url(${hero})` }}
       >
         <div className=" p-8 rounded-lg  text-black md:w-1/2 w-full">
-          <h1 className="md:text-5xl text-3xl font-bold mb-4">Course</h1>
+          <h1 className="md:text-5xl text-3xl font-bold mb-4">Courses</h1>
           <p className="md:text-lg text-sm leading-relaxed">
             Discover our wide selection of expert-led courses designed to boost
             your skills and career growth. Start learning today and take the

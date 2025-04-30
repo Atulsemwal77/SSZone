@@ -5,9 +5,6 @@ import { ArrowRight, Plus, X } from "lucide-react";
 import { FaStar } from "react-icons/fa6";
 import { FaRegStarHalfStroke } from "react-icons/fa6";
 import hero from "../assets/image/hero.png";
-import blog1 from "../assets/image/blog1.jpg";
-import blog2 from "../assets/image/blog2.jpg";
-import blog3 from "../assets/image/blog3.jpg";
 import card from "../assets/image/card.jpg";
 import online from "../assets/image/student.jpg";
 import vodafone from "../assets/image/vodafone.png";
@@ -20,10 +17,14 @@ import image1 from "../assets/image/image04.png";
 import image2 from "../assets/image/pexels-julia-m-cameron-4144224 1.png";
 import blogimg from "../assets/image/card.jpg";
 import CourseCard from "../componant/CourseCard";
-// import company from "../assets/image/company.png";
 import BlogCard from "../componant/BlogCard";
 import Card from "../componant/Card";
+import { FaArrowRightLong } from "react-icons/fa6";
 import all_course from "../assets/Course_Data";
+import learnIcon from "../assets/image/black_board_fill 1.png";
+import learnIcon2 from "../assets/image/book_6_fill 1.png";
+import learnIcon3 from "../assets/image/mortarboard_fill 1.png";
+import learnIcon4 from "../assets/image/certificate_2_fill 1.png";
 
 const courses = [
   {
@@ -207,15 +208,16 @@ function Home() {
     }
   };
 
-  // const filteredCourses =
-  //   active === "All Categories"
-  //     ? courses
-  //     : courses.filter((course) => course.category === active);
-
   const filteredCourses =
     active === "All Categories"
       ? all_course.slice(0, 6)
       : all_course.filter((course) => course.category === active);
+  const features = [
+    { icon: learnIcon, text: "Start learning from our experts." },
+    { icon: learnIcon2, text: "Enhance your skills with us now." },
+    { icon: learnIcon3, text: "Do the professional level Courses." },
+    { icon: learnIcon4, text: "Get our verified Certificate." },
+  ];
 
   return (
     <div>
@@ -289,7 +291,7 @@ function Home() {
             </div>
 
             <div className="absolute inset-0 z-0 flex justify-center items-center">
-              <div className="md:w-100 md:h-100 w-75 h-75  rounded-full bg-blue-500 opacity-100 border-dashed border-4 border-blue-100"></div>
+              <div className="md:w-100 md:h-100 w-75 h-75 p-2  rounded-full bg-blue-500 opacity-100 border-dashed border-4 border-blue-100"></div>
             </div>
           </div>
         </div>
@@ -365,61 +367,63 @@ function Home() {
             </div>
           </div>
 
-          {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-self-center ">
-            {filteredCourses.map((course, index) => (
-              <CourseCard
-                key={index}
-                image={course.image}
-                duration={course.duration}
-                title={course.title}
-                description={course.description}
-                lessons={course.lessons}
-                rating={course.rating}
-                price={course.price}
-              />
-            ))}
-          </div> */}
-
           <Card all_course={filteredCourses} />
 
-          <button className="bg-blue-600 hover:bg-blue-700 mt-5 text-white px-6 py-3 rounded-lg flex items-center justify-self-center gap-2 transition  cursor-pointer duration-300 ease-in-out  hover:scale-105 ">
-            Explore All Courses <ArrowRight size={20} />
-          </button>
+          <Link to="/courses">
+            <button className="bg-blue-600 hover:bg-blue-700 mt-5 text-white px-6 py-3 rounded-lg flex items-center justify-self-center gap-2 transition  cursor-pointer duration-300 ease-in-out  hover:scale-105 ">
+              Explore All Courses <ArrowRight size={20} />
+            </button>
+          </Link>
         </div>
 
-        <div className=" flex flex-col lg:flex-row justify-around items-center gap-20 pt-10 p-2 ">
-          <div className=" max-w-[500px] justify-self-start ">
-            <h1 className="text-4xl my-8">
-              Start Learning With Skills Hunt Now.
-            </h1>
-            <p className="text-sm">
+        <section className="flex flex-col-reverse lg:flex-row items-center justify-between px-7 py-16 max-w-7xl mx-auto gap-28">
+          {/* Left Content */}
+          <div className="w-full lg:w-1/2">
+            <p className="text-sm font-semibold text-blue-600 uppercase mb-2">
+              About Us
+            </p>
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              Start Learning With Skills <br /> Hunt Now.
+            </h2>
+            <p className="text-gray-600 mb-8">
               Tap into your full potential with online courses guided by
               industry experts. Master high-demand skills on your schedule and
               take control of your career journey today.
             </p>
-            <div className="grid grid-cols-2 gap-2 my-8">
-              <li className=" list-none">Start learning from our experts.</li>
-              <li className=" list-none">Enhance your skills with us now.</li>
-              <li className=" list-none">Do the professional level Courses</li>
-              <li className=" list-none">Get our verified Certificate</li>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-8">
+              {features.map((item, index) => (
+                <div key={index} className="flex items-start gap-3">
+                  <div className="bg-blue-100 p-2 rounded-full">
+                    <img src={item.icon} alt="icon" className="w-6 h-6" />
+                  </div>
+                  <p className="text-gray-800 w-[200px]">{item.text}</p>
+                </div>
+              ))}
             </div>
-            <button className=" flex gap-2 items-center bg-blue-700 text-white px-8 py-4 rounded-lg my-4  cursor-pointer duration-300 ease-in-out  hover:scale-105 ">
-              Browse Courses <ArrowRight className="text-xl " />
+
+            <button className="flex gap-2 items-center bg-blue-700 text-white px-8 py-4 rounded-lg my-4 transition cursor-pointer duration-300 ease-in-out  hover:scale-105">
+              Browse Courses <FaArrowRightLong className="text-xl " />
             </button>
           </div>
-          <div className=" relative">
+
+          {/* Right Content */}
+          <div className="w-full lg:w-1/2 relative flex justify-center items-center">
+            <div className="absolute top-[-10%] right-20 border-2 border-blue-600 rounded-lg w-54 h-70 z-0 hidden lg:block"></div>
+            <div className="absolute top-[-15%] right-18 border-2 border-blue-600 rounded-lg w-54 h-70 z-0 hidden lg:block"></div>
+
             <img
               src={image1}
-              alt="image1"
-              className="h-[35vh] lg:h-[40vh] relative z-10 "
+              alt="Video Learning"
+              className="relative z-10 rounded-lg w-[300px] shadow-lg"
             />
             <img
               src={image2}
-              alt="image2"
-              className="h-[40vh] absolute top-[-100px] right-[-60px] lg:right-[-100px]"
+              alt="Team Work"
+              className="absolute bottom-[-100px] left-[-40px] w-[250px] rounded-lg shadow-lg z-20 hidden lg:block"
             />
           </div>
-        </div>
+        </section>
 
         <div>
           <div className="pt-10 justify-self-center items-center">
@@ -442,15 +446,6 @@ function Home() {
           </div>
           <div>
             <div className="p-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-self-center ">
-              {/* {blog.map((course, index) => (
-                <BlogCard
-                  key={index}
-                  title={course.title}
-                  description={course.description}
-                  date={course.date}
-                  image={course.image}
-                />
-              ))} */}
               {blogData.map((blog) => (
                 <BlogCard key={blog.id} blog={blog} />
               ))}

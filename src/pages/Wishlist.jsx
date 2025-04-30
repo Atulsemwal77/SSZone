@@ -9,7 +9,7 @@ function Wishlist() {
         style={{ backgroundImage: `url(${hero})` }}
       >
         <div className=" p-8 rounded-lg  text-black md:w-1/2 w-full">
-          <h1 className="md:text-5xl text-3xl font-bold mb-4">About Us</h1>
+          <h1 className="md:text-5xl text-3xl font-bold mb-4">Wishlist</h1>
           <p className="md:text-lg text-sm leading-relaxed">
             Keep track of the courses you love and save them for later. Easily
             access your favorite learning picks anytime, anywhere.
