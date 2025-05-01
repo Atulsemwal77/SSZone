@@ -5,7 +5,7 @@ import { useCart } from '../context/CartContext'
 import { Link } from 'react-router-dom'
 
 function Card({all_course}) {
-  const { addToCart, toggleWishlist, wishlistItems } = useCart();
+  const { toggleWishlist, wishlistItems } = useCart();
 
   return (
     <>
@@ -15,11 +15,12 @@ function Card({all_course}) {
             const isWishlisted = wishlistItems.find(item => item.id === course.id);
 
             return (
-              < Link to={`/courseDetailsOverview/${course.id}`} state={course}>
-        <div key={index} className='max-w-[400px] max-h-[499px] border-1 rounded-[12px] p-4 border-[#E3E3E3] hover:border-[#296AD2] flex flex-col gap-4'>
+              <div key={index} className='max-w-[400px] max-h-[499px] border-1 rounded-[12px] p-4 border-[#E3E3E3] hover:border-[#296AD2] flex flex-col gap-4'>
                 {/* image section */}
                 <div className='relative w-full'>
+                < Link to={`/courseDetailsOverview/${course.id}`} state={course}>
                   <img src={course.image} alt="" className='rounded-[12px]' />
+                </Link>
                   {/* left corner icon */}
                   <div className='absolute top-2 left-4 bg-[#296AD2] py-2 px-[21px] rounded-[40px] flex gap-2 items-center'>
                     <FaRegClock className='text-white' /> 
@@ -57,14 +58,15 @@ function Card({all_course}) {
                     <MdCurrencyRupee className='text-[#F04438] text-[20px]' />
                     <p className='font-semibold text-[20px] text-[#F04438]'>{course.price}</p>
                   </div>
-                  <button onClick={() => addToCart(course)}
-                    className='cursor-pointer py-3 px-6 border-1 hover:bg-[#296AD2] hover:text-white border-[#296AD2] text-[#296AD2] font-medium text-[16px] rounded-[4px]'>
-                    Enroll Now
-                  </button>
-                    
-        </div>
+
+                  < Link to={`/courseDetailsOverview/${course.id}`} state={course}>
+                    <button
+                      className='cursor-pointer py-3 px-6 border-1 hover:bg-[#296AD2] hover:text-white border-[#296AD2] text-[#296AD2] font-medium text-[16px] rounded-[4px]'>
+                      Enroll Now
+                    </button>
+                  </Link>
               </div>
-            </Link>
+              </div>
       )
           })}
         </div>
