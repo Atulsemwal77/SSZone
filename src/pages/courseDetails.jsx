@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, useParams } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
 import { FaRegStarHalfStroke } from "react-icons/fa6";
 import { FaTwitter, FaDribbble, FaLinkedin } from "react-icons/fa";
@@ -9,10 +9,25 @@ import video from "../assets/image/video.jpg";
 import card from "../assets/image/card.jpg";
 import right from "../assets/image/checkmark-circle-02.png";
 import avatar from "../assets/image/avatar.png";
+import { useCart } from "../context/CartContext";
+import all_course from "../assets/Course_Data"
+import { MdCurrencyRupee } from "react-icons/md";
+import Card from "../componant/Card";
 
 const CourseDetails = () => {
-  const location = useLocation();
-  const data = location.state;
+  const { addToCart } = useCart()
+  const { courseId } = useParams()
+  const course = all_course.find((e)=> e.id === Number(courseId))
+  if (!course) {
+    return (
+      <div className="max-w-[1440px] mx-auto py-20 text-center text-red-600 text-xl">
+        Course not found.
+      </div>
+    )
+  }
+
+  // const location = useLocation();
+  // const data = location.state;
   const [activeTab, setActiveTab] = useState("Overview");
 
   const courses = [
@@ -159,17 +174,17 @@ const CourseDetails = () => {
     <>
       {/* Banner Image */}
       <div className="p-3">
-        <img src={data.image} alt="Course Banner" className="h-[50vh] md:h-[70vh] w-full object-cover rounded" />
+        <img src={course.image} alt="Course Banner" className="h-[50vh] md:h-[70vh] w-full object-cover rounded" />
       </div>
 
       {/* Course Info */}
       <div className="relative  ">
         <div className="shadow-lg bg-white px-6 py-4 max-w-4xl md:mx-20 mx-auto rounded-xl -mt-20 md:-mt-28">
-          <h1 className="text-2xl font-bold mb-3">{data.title}</h1>
+          <h1 className="text-2xl font-bold mb-3">{course.title}</h1>
           <div className="flex flex-wrap md:flex-nowrap gap-6">
             <div className="flex-1">
               <h3 className="text-gray-500">Instructor</h3>
-              <p className="font-semibold">Dylan Meringue</p>
+              <p className="font-semibold">{course.author}</p>
             </div>
             <div className="flex-1">
               <h3 className="text-gray-500">Category</h3>
@@ -210,8 +225,13 @@ const CourseDetails = () => {
         {/* Sidebar */}
         <div className="w-full md:w-[400px] flex-shrink-0 shadow-lg p-6 rounded-xl bg-white">
           <img src={video} alt="Demo Video" className="rounded-md mb-6" />
-          <h2 className="text-2xl font-bold text-center mb-4">₹4,999</h2>
-          <button className="w-full bg-blue-700 text-white py-3 rounded-lg mb-6 hover:bg-blue-800">Add To Cart</button>
+          <div className="flex items-center justify-center mb-4">
+            <MdCurrencyRupee className="h-6 w-6" />
+            <h2 className="text-2xl font-bold font-[Manrope]">{course.price}</h2>
+          </div>
+
+          <button onClick={()=>addToCart(course)}
+           className="cursor-pointer w-full bg-blue-700 text-white py-3 rounded-lg mb-6 hover:bg-blue-800">Add To Cart</button>
           <div className="flex flex-col gap-2 text-gray-600">
             <p>✅ 62 hours on-demand video</p>
             <p>✅ Instructor: Dylan Meringue</p>
@@ -242,7 +262,7 @@ const CourseDetails = () => {
         <h1 className="text-3xl md:text-4xl font-bold mb-4">You Might Also Like</h1>
         <p className="text-gray-600 mb-12">Discover personalized course recommendations curated to match your interests and learning goals.</p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {courses.map((course, index) => (
             <CourseCard
               key={index}
@@ -255,7 +275,9 @@ const CourseDetails = () => {
               price={course.price}
             />
           ))}
-        </div>
+        </div> */}
+        
+        <Card all_course={all_course.slice(0,3)}/>
       </div>
     </>
   );
