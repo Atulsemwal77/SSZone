@@ -48,8 +48,9 @@ function WishlistItems() {
                 <MdCurrencyRupee className="text-[#F04438] text-[20px]" />
                 <p className="font-semibold text-[20px] text-[#F04438]">{course.price}</p>
               </div>
-              <Link to="/wishlist">
-                <button onClick={() => addToCart(course)}
+              <Link to={`/courseDetailsOverview/${course.id}`} state={course}>
+                <button 
+                // onClick={() => addToCart(course)}
                   className="cursor-pointer py-3 px-6 border-1 hover:bg-[#296AD2] hover:text-white border-[#296AD2] text-[#296AD2] font-medium text-[16px] rounded-[4px]">
                   Enroll Now
                 </button>

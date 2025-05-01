@@ -13,6 +13,7 @@ import { useCart } from "../context/CartContext";
 import all_course from "../assets/Course_Data"
 import { MdCurrencyRupee } from "react-icons/md";
 import Card from "../componant/Card";
+import { toast } from "react-toastify";
 
 const CourseDetails = () => {
   const { addToCart } = useCart()
@@ -230,7 +231,10 @@ const CourseDetails = () => {
             <h2 className="text-2xl font-bold font-[Manrope]">{course.price}</h2>
           </div>
 
-          <button onClick={()=>addToCart(course)}
+          <button onClick={()=>{
+                addToCart(course)
+                toast("Added to Cart")
+              }}
            className="cursor-pointer w-full bg-blue-700 text-white py-3 rounded-lg mb-6 hover:bg-blue-800">Add To Cart</button>
           <div className="flex flex-col gap-2 text-gray-600">
             <p>✅ 62 hours on-demand video</p>

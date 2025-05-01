@@ -3,6 +3,7 @@ import { MdCurrencyRupee } from 'react-icons/md'
 import { TiDocumentText } from 'react-icons/ti'
 import { useCart } from '../context/CartContext'
 import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 function Card({all_course}) {
   const { toggleWishlist, wishlistItems } = useCart();
@@ -27,11 +28,11 @@ function Card({all_course}) {
                     <p className='text-[14px] font-normal text-white'>{course.duration}</p>
                   </div>
                   {/* right corner icon */}
-                  <button onClick={() => toggleWishlist(course)} className="cursor-pointer absolute top-2 right-4 bg-white rounded-full p-2">
+                  <button onClick={() => toggleWishlist(course) } className="cursor-pointer absolute top-2 right-4 bg-white rounded-full p-2">
                     {wishlistItems.find(item => item.id === course.id) ? (
-                      <FaHeart className="text-red-500 " />
+                      <FaHeart className="text-red-500 " onClick={()=>toast("Reamove from wishlist")} />
                     ) : (
-                      <FaRegHeart className="text-gray-500" />
+                      <FaRegHeart className="text-gray-500" onClick={()=>toast("Add to wishlist")} />
                     )}
                   </button>
 

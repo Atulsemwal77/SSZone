@@ -1,7 +1,9 @@
+import { useEffect } from "react";
 import hero from "../assets/image/wishlistbanner.jpg";
 import Banner from "../componant/Banner";
 import WishlistItems from "../componant/WhislistItems";
 function Wishlist() {
+ 
   return (
     <>
       <div

@@ -11,6 +11,7 @@ import BlogDetails from "./pages/BlogDetails";
 import Footer from "./componant/Footer";
 import AboutUs from "./pages/AboutUs";
 import CourseDetails from "./pages/courseDetails";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/blogs/:id" element={<BlogDetails />} />
         <Route path="/courseDetailsOverview/:courseId" element={<CourseDetails />} />
       </Routes>
+      <ToastContainer/>
       <Footer />
     </>
   );

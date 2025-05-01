@@ -4,7 +4,7 @@ let all_course = [
     {
       id: 1,
       image: img1,
-      title: "FullStack Web Development",
+      title: "FullStack Web Developmenttttttttt",
       description: `Become a proficient full-stack developer with this course covering HTML, CSS, JavaScript, React.`,
       lessons: 20,
       rating: 4.8,
