@@ -3,16 +3,54 @@ import { MdCurrencyRupee } from 'react-icons/md';
 import { TiDocumentText } from 'react-icons/ti';
 import { useCart } from '../context/CartContext';
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 function WishlistItems() {
-  const { wishlistItems, toggleWishlist, addToCart } = useCart();
+  const [wishlistItems, setWishlistItems] = useState([]);
+  const [loading, setLoading] = useState(true); 
+  const [error, setError] = useState(null); 
+
+  useEffect(() => {
+    axios.get(`${import.meta.env.VITE_BACKEND}wishlist/wishlistItems`)
+      .then((res) => {
+        // console.log("Wishlist API Response:", res.data);
+        setWishlistItems(res.data.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Error fetching wishlist items:", err);
+        setError("Failed to load wishlist items.");
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return <p className="text-center text-[18px] text-gray-500 py-10">Loading wishlist...</p>;
+  }
+
+  if (error) {
+    return <p className="text-center text-[18px] text-red-500 py-10">{error}</p>;
+  }
 
   if (wishlistItems.length === 0) {
     return <p className="text-center text-[18px] text-gray-500 py-10">Your wishlist is empty.</p>;
   }
+const deleteWishlistItems = async (_id) => {
+  try {
+    await axios.delete(`${import.meta.env.VITE_BACKEND}wishlist/removeWishlistItems/${_id}`);
+    setWishlistItems(prev => prev.filter(item => item._id !== _id));
+    toast.success("Item removed from wishlist");
+  } catch (error) {
+    console.log("Error removing wishlist item:", error);
+    toast.error("Failed to remove item");
+  }
+};
+
 
   return (
-    <div className="pb-[30px] px-4 sm:px-10 md:px-24 font-[Manrope]">
+         <div className="pb-[30px] px-4 sm:px-10 md:px-24 font-[Manrope]">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {wishlistItems.map((course, index) => (
           <div key={index} className="max-w-[400px] max-h-[499px] border-1 rounded-[12px] p-4 border-[#E3E3E3] hover:border-[#296AD2] flex flex-col gap-4">
@@ -22,7 +60,7 @@ function WishlistItems() {
                 <FaRegClock className="text-white" />
                 <p className="text-[14px] font-normal text-white">{course.duration}</p>
               </div>
-              <button onClick={() => toggleWishlist(course)}
+              <button onClick={() => deleteWishlistItems(course._id)}
                 className='cursor-pointer absolute top-2 right-4 bg-[#ffffff] rounded-full p-2'>
                 <FaHeart className="text-red-600" />
               </button>
@@ -60,6 +98,7 @@ function WishlistItems() {
         ))}
       </div>
     </div>
+
   );
 }
 

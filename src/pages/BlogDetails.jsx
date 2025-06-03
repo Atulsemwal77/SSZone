@@ -1,32 +1,30 @@
-import React, { useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import ins from "../assets/image/ins.jpg";
 import related from "../assets/image/related.jpg";
-import { useForm } from "react-hook-form";
 import BlogCard from "../componant/BlogCard";
-import { FaLongArrowAltRight } from "react-icons/fa";
+import { FaTrash } from "react-icons/fa";
+import axios from "axios";
 import {
   CiFacebook,
   CiLinkedin,
   CiTwitter,
   CiBasketball,
 } from "react-icons/ci";
+import { toast } from "react-toastify";
 
 const BlogDetails = () => {
-  // const { id } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
   const { blogData, allBlogs } = location.state || {};
-  const [comments, setComments] = useState([
-    {
-      id: 1,
-      name: "Russell Sprout",
-      date: "Apr 24, 2025  10:30 AM",
-      comment:
-        "Great read for beginners! I finally understand how JavaScript fits in with HTML and CSS. Excited to start coding!",
-      avatar: ins,
-    },
-  ]);
+
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [comment, setComment] = useState("");
+  const [agree, setAgree] = useState(false);
+  const [allcomment, setAllComment] = useState([]);
 
   const handleRelatedBlogClick = (blog) => {
     navigate(`/blogs/${blog.id}`, {
@@ -43,34 +41,73 @@ const BlogDetails = () => {
     ?.filter((blog) => blog.id !== blogData?.id)
     .slice(0, 3);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm();
+  const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const validatePhone = (phone) => /^[0-9]{10}$/.test(phone);
 
-  const onSubmit = (data) => {
-    const newComment = {
-      id: comments.length + 1,
-      name: `${data.firstName} ${data.lastName}`,
-      date: new Date().toLocaleString("en-US", {
-        year: "numeric",
-        month: "short",
-        day: "2-digit",
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
-      comment: data.comment,
-      avatar: ins,
-    };
+  const fetchComments = async () => {
+    try {
+      const response = await axios.get(
+        `${import.meta.env.VITE_BACKEND}comment/getComment`
+      );
+      if (response.data.success) {
+        setAllComment(response.data.data);
+      } else {
+        toast.error("Failed to fetch comments.");
+      }
+    } catch (error) {
+      console.error("Error fetching comments:", error);
+      toast.error("Something went wrong while fetching comments.");
+    }
+  };
 
-    setComments((prevComments) => [newComment, ...prevComments]);
-    reset();
+  useEffect(() => {
+    fetchComments();
+  }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const commentData = { firstName, lastName, phone, email, comment };
+
+    if (!validateEmail(email)) {
+      return toast.error("Please enter a valid email address.");
+    }
+    if (!validatePhone(phone)) {
+      return toast.error("Please enter a valid 10-digit phone number.");
+    }
+
+    try {
+      await axios.post(
+        `${import.meta.env.VITE_BACKEND}comment/postComment`,
+        commentData
+      );
+      toast.success("Comment sent successfully!");
+      setFirstName("");
+      setLastName("");
+      setPhone("");
+      setEmail("");
+      setComment("");
+      setAgree(false);
+
+      await fetchComments(); // ✅ Refresh comments
+    } catch (error) {
+      console.log("Error to send Comment", error);
+      toast.error("Error to send Comment");
+    }
+  };
+
+  const deleteItem = async (id) => {
+    try {
+      await axios.delete(`${import.meta.env.VITE_BACKEND}comment/dltComment/${id}`);
+      toast.success("Comment deleted!");
+      setAllComment(allcomment.filter((item) => item._id !== id));
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to delete comment");
+    }
   };
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 ">
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8">
       {/* Banner */}
       <div className="w-full h-64 md:h-96 overflow-hidden rounded-xl">
         <img
@@ -81,7 +118,7 @@ const BlogDetails = () => {
       </div>
 
       <div className="flex flex-col md:flex-row gap-6 mt-6 justify-between">
-        {/* Main Column */}
+        {/* Main Content */}
         <div className="bg-white rounded-lg shadow-md flex flex-col gap-5 items-start justify-start w-full md:w-2/3 px-3">
           <h1 className="text-3xl font-bold mb-4">{blogData.title}</h1>
           <p className="text-gray-600 mb-4">{blogData.date}</p>
@@ -146,7 +183,7 @@ const BlogDetails = () => {
         </aside>
       </div>
 
-      {/* Related Blogs section */}
+      {/* Related Blogs */}
       <div className="mt-12 px-5">
         <h2 className="text-2xl font-bold mb-6">Related Blogs</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
@@ -160,138 +197,132 @@ const BlogDetails = () => {
         </div>
       </div>
 
-      {/* Comments & Form */}
+      {/* Comments Section */}
       <section className="space-y-6 mt-12 px-5 py-6 bg-gray-50">
-        <h2 className="text-2xl font-bold">Comments ({comments.length})</h2>
+        <h2 className="text-2xl font-bold">
+          Comments {allcomment.length > 0 ? allcomment.length : ""}
+        </h2>
 
-        {/* Display Comments */}
-        {comments.map((comment) => (
-          <div
-            key={comment.id}
-            className="flex gap-4 bg-white p-4 rounded-xl shadow"
-          >
-            <img
-              src={comment.avatar}
-              alt="Commenter"
-              className="w-12 h-12 rounded-full object-cover"
-            />
-            <div>
-              <p className="font-semibold">{comment.name}</p>
-              <p className="text-sm text-gray-500">{comment.date}</p>
+        <div className="max-w-full overflow-x-auto flex space-x-4 py-4 px-2 border border-gray-200 rounded-md bg-white">
+         {allcomment.length > 0 ? (
+          <>
+           {allcomment.map((comment) => (
+            <div
+              key={comment._id}
+              className="min-w-[300px] max-w-xs flex-shrink-0 bg-gray-50 p-4 rounded-xl shadow relative"
+            >
+              <div className="flex items-center gap-4">
+                <img
+                  src={comment.avatar || related}
+                  alt="Commenter"
+                  className="w-12 h-12 rounded-full object-cover"
+                />
+                <div>
+                  <p className="font-semibold">
+                    {comment.firstName} {comment.lastName}
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    {new Date(comment.createdAt).toLocaleDateString()}
+                  </p>
+                </div>
+              </div>
               <p className="mt-2 text-gray-700">{comment.comment}</p>
+              <button
+                onClick={() => deleteItem(comment._id)}
+                className="absolute top-4 right-4 text-red-500 hover:text-red-700"
+              >
+                <FaTrash />
+              </button>
             </div>
-          </div>
-        ))}
+          ))}
+
+          </>
+         ):(
+          <>
+          <p className="mx-auto font-semibold">Not Comments Yet!</p>
+          </>
+         )}        
+         </div>
 
         {/* Comment Form */}
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="bg-white p-6 rounded-xl shadow space-y-4 w-1/2"
-        >
+        <form className="bg-white p-6 rounded-xl shadow space-y-4 md:w-1/2">
           <h3 className="text-xl font-bold">Leave a Comment</h3>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm mb-1">First Name</label>
               <input
-                {...register("firstName", {
-                  required: "First name is required",
-                  minLength: {
-                    value: 2,
-                    message: "Name must be at least 2 characters",
-                  },
-                  placeholder: "Enter your First Name",
-                })}
-                className="w-full rounded border px-3 py-2 placeholder-gray-400"
+                type="text"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+                placeholder="Enter your First Name"
+                className="w-full rounded border px-3 py-2"
               />
-              {errors.firstName && (
-                <p className="text-red-500 text-xs">
-                  {errors.firstName.message}
-                </p>
-              )}
             </div>
             <div>
               <label className="block text-sm mb-1">Last Name</label>
               <input
-                {...register("lastName", {
-                  required: "Last name is required",
-                  minLength: {
-                    value: 2,
-                    message: "Name must be at least 2 characters",
-                  },
-                  placeholder: "Enter your Last Name",
-                })}
-                className="w-full rounded border px-3 py-2 placeholder-gray-400"
+                type="text"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+                placeholder="Enter your Last Name"
+                className="w-full rounded border px-3 py-2"
               />
-              {errors.lastName && (
-                <p className="text-red-500 text-xs">Last name is required</p>
-              )}
             </div>
             <div>
               <label className="block text-sm mb-1">Email</label>
               <input
-                {...register("email", {
-                  required: "Email is required",
-                  pattern: {
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message: "Invalid email address",
-                  },
-                  placeholder: "Enter your Email",
-                })}
-                className="w-full border rounded px-3 py-2 placeholder-gray-400"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your Email"
+                className="w-full rounded border px-3 py-2"
               />
-              {errors.email && (
-                <p className="text-red-500 text-xs">{errors.email.message}</p>
-              )}
             </div>
             <div>
               <label className="block text-sm mb-1">Phone Number</label>
               <input
-                {...register("phoneNumber", {
-                  required: true,
-                  placeholder: "Enter your Phone Number",
-                })}
-                className="w-full border rounded px-3 py-2 placeholder-gray-400"
+                type="number"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="Enter your Phone Number"
+                className="w-full rounded border px-3 py-2"
               />
-              {errors.phoneNumber && (
-                <p className="text-red-500 text-xs">
-                  Enter a valid phone number
-                </p>
-              )}
             </div>
             <div className="md:col-span-2">
               <label className="block text-sm mb-1">Comment</label>
               <textarea
-                {...register("comment", {
-                  required: "Comment is required",
-                  minLength: {
-                    value: 10,
-                    message: "Comment must be at least 10 characters",
-                  },
-                  placeholder: "Write your comment here...",
-                })}
-                className="w-full rounded border  px-3 py-2 h-24 resize-none text-gray-700  placeholder-gray-800"
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                placeholder="Write your comment here..."
+                className="w-full rounded border px-3 py-2 h-24 resize-none"
               ></textarea>
-              {errors.comment && (
-                <p className="text-red-500 text-xs">{errors.comment.message}</p>
-              )}
             </div>
           </div>
+
           <div className="flex items-center">
             <input
-              {...register("agree", { required: true })}
               type="checkbox"
               className="mr-2"
+              checked={agree}
+              onChange={(e) => setAgree(e.target.checked)}
             />
             <label className="text-sm text-gray-700">
               I agree that my data is collected and stored
             </label>
           </div>
-          {errors.agree && (
-            <p className="text-red-500 text-xs">You must agree to continue</p>
-          )}
+
           <button
             type="submit"
-            className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700"
+            onClick={handleSubmit}
+            disabled={
+              !firstName || !lastName || !email || !phone || !comment || !agree
+            }
+            className={`px-6 py-2 rounded text-white ${
+              !firstName || !lastName || !email || !phone || !comment || !agree
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-blue-600 hover:bg-blue-700"
+            }`}
           >
             Post Comment
           </button>

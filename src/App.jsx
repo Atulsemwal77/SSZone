@@ -28,7 +28,7 @@ function App() {
         <Route path="/blogs/:id" element={<BlogDetails />} />
         <Route path="/courseDetailsOverview/:courseId" element={<CourseDetails />} />
       </Routes>
-      <ToastContainer/>
+      <ToastContainer autoClose={1000} />
       <Footer />
     </>
   );

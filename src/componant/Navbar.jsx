@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Heart, ShoppingCart } from "lucide-react";
 import { FaBars, FaTimes } from "react-icons/fa";
 
 import logo from "../assets/image/logo.png";
-import { useCart } from "../context/CartContext";
+import axios from "axios";
+
 
 function Navbaar() {
-  const { cartCount, wishlistCount } = useCart();
+  // const { cartCount, wishlistCount } = useCart();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -19,8 +20,42 @@ function Navbaar() {
       ? "text-primary font-semibold"
       : "text-gray-700 hover:text-primary";
 
+    const [cartItems, setCartItems] = useState([]);
+    const [wishlist , setWishlist] = useState([])
+
+  
+  // Number of cart items 
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_BACKEND}cart/cartItems`)
+      .then((res) => {
+        setCartItems(res.data.data);
+        // console.log("Cart items loaded:", res.data.data);
+        
+      })
+      .catch((err) => {
+        console.error("Error fetching cart items:", err);
+      });
+  }, []);
+
+  // Number of wishlist items 
+   useEffect(() => {
+    axios.get(`${import.meta.env.VITE_BACKEND}wishlist/wishlistItems`)
+      .then((res) => {
+        // console.log("Wishlist API Response:", res.data);
+        setWishlist(res.data.data);
+        
+      })
+      .catch((err) => {
+        console.error("Error fetching wishlist items:", err);
+        setError("Failed to load wishlist items.");
+        
+      });
+  }, []);
+
   return (
     <nav className="bg-white shadow-sm mx-auto px-4">
+      {/* {cartItems.length} {wishlist.length} */}
       <div className="py-4 flex items-center justify-between mx-auto">
         <NavLink to="/" className="flex items-center gap-2">
           <img src={logo} alt="Site Logo" />
@@ -52,9 +87,9 @@ function Navbaar() {
             >
               <div className="relative cursor-pointer">
                 <Heart className="w-4 h-4" />
-                {wishlistCount > 0 && (
+                {wishlist.length > 0 && (
                   <div className="absolute -top-3 -right-2 bg-red-600 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">
-                    <span>{wishlistCount}</span>
+                    <span>{wishlist.length}</span>
                   </div>
                 )}
               </div>
@@ -65,9 +100,9 @@ function Navbaar() {
             >
               <div className="relative cursor-pointer">
                 <ShoppingCart className="w-4 h-4" />
-                {cartCount > 0 && (
+                {cartItems.length > 0 && (
                   <div className="absolute -top-3 -right-2 bg-red-600 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">
-                    <span>{cartCount}</span>
+                    <span>{cartItems.length}</span>
                   </div>
                 )}
               </div>
@@ -123,6 +158,36 @@ function Navbaar() {
             <NavLink to="/contact" onClick={toggleMenu} className={getNavLinkClass}>
               Contact us
             </NavLink>
+
+            <div className="flex gap-5">
+            <NavLink
+              to="/wishlist"
+              className="w-8 h-8 rounded-full border flex items-center justify-center transition duration-300 ease-in-out hover:scale-105"
+            >
+              <div className="relative cursor-pointer">
+                <Heart className="w-4 h-4" />
+                {wishlist.length > 0 && (
+                  <div className="absolute -top-3 -right-2 bg-red-600 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">
+                    <span>{wishlist.length}</span>
+                  </div>
+                )}
+              </div>
+            </NavLink>
+            <NavLink
+              to="/cart"
+              className="w-8 h-8 rounded-full border flex items-center justify-center transition duration-300 ease-in-out hover:scale-105"
+            >
+              <div className="relative cursor-pointer">
+                <ShoppingCart className="w-4 h-4" />
+                {cartItems.length > 0 && (
+                  <div className="absolute -top-3 -right-2 bg-red-600 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">
+                    <span>{cartItems.length}</span>
+                  </div>
+                )}
+              </div>
+            </NavLink>
+          </div>
+
             <div className="flex gap-4 pt-2">
               <NavLink
                 to="/signup"

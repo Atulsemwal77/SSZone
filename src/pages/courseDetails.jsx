@@ -10,25 +10,23 @@ import card from "../assets/image/card.jpg";
 import right from "../assets/image/checkmark-circle-02.png";
 import avatar from "../assets/image/avatar.png";
 import { useCart } from "../context/CartContext";
-import all_course from "../assets/Course_Data"
+import all_course from "../assets/Course_Data";
 import { MdCurrencyRupee } from "react-icons/md";
 import Card from "../componant/Card";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 const CourseDetails = () => {
-  const { addToCart } = useCart()
-  const { courseId } = useParams()
-  const course = all_course.find((e)=> e.id === Number(courseId))
+  const { courseId } = useParams();
+  const course = all_course.find((e) => e.id === Number(courseId));
   if (!course) {
     return (
       <div className="max-w-[1440px] mx-auto py-20 text-center text-red-600 text-xl">
         Course not found.
       </div>
-    )
+    );
   }
 
-  // const location = useLocation();
-  // const data = location.state;
   const [activeTab, setActiveTab] = useState("Overview");
 
   const courses = [
@@ -36,7 +34,8 @@ const CourseDetails = () => {
       image: card,
       duration: "12 weeks",
       title: "Full Stack Web Development",
-      description: "Become a proficient full-stack developer with HTML, CSS, JavaScript, React.",
+      description:
+        "Become a proficient full-stack developer with HTML, CSS, JavaScript, React.",
       lessons: 20,
       rating: 4.8,
       price: 4999,
@@ -45,7 +44,8 @@ const CourseDetails = () => {
       image: card,
       duration: "8 weeks",
       title: "Frontend Mastery",
-      description: "Master frontend development with Tailwind, React, and performance techniques.",
+      description:
+        "Master frontend development with Tailwind, React, and performance techniques.",
       lessons: 15,
       rating: 4.7,
       price: 3999,
@@ -54,7 +54,8 @@ const CourseDetails = () => {
       image: card,
       duration: "12 weeks",
       title: "Full Stack Web Development",
-      description: "Become a proficient full-stack developer with HTML, CSS, JavaScript, React.",
+      description:
+        "Become a proficient full-stack developer with HTML, CSS, JavaScript, React.",
       lessons: 20,
       rating: 4.8,
       price: 4999,
@@ -65,7 +66,8 @@ const CourseDetails = () => {
     {
       name: "Russell Sprout",
       date: "April 19, 2025 AT 10:47 PM",
-      comment: "Great read for beginners! I finally understand how JavaScript fits in with HTML and CSS.",
+      comment:
+        "Great read for beginners! I finally understand how JavaScript fits in with HTML and CSS.",
       rating: 4.5,
       image: "/images/user1.jpg",
     },
@@ -90,7 +92,7 @@ const CourseDetails = () => {
       <div className="px-6 md:px-12 my-6">
         <h1 className="text-xl font-bold mb-4">Description</h1>
         <p className="text-gray-600 mb-6">
-          Dive into the world of Full Stack Web Development and learn how to build complete, dynamic web applications from start to finish. ...
+          {course.description}
         </p>
         <div className="flex flex-col gap-4">
           <h1 className="text-xl font-bold">What You Will Learn</h1>
@@ -102,7 +104,7 @@ const CourseDetails = () => {
             "Connect frontend and backend using RESTful APIs.",
             "Deploy full stack applications to live servers.",
             "Understand version control with Git and GitHub.",
-            "Gain real-world experience through hands-on projects."
+            "Gain real-world experience through hands-on projects.",
           ].map((item, index) => (
             <p key={index} className="flex items-center gap-2">
               <img src={right} alt="check" className="w-4 h-4" /> {item}
@@ -124,9 +126,12 @@ const CourseDetails = () => {
             "Databases - MongoDB",
             "User Authentication & Authorization",
             "Deployment & Hosting",
-            "Project Work"
+            "Project Work",
           ].map((module, index) => (
-            <h2 key={index} className="p-3 border-b flex justify-between items-center">
+            <h2
+              key={index}
+              className="p-3 border-b flex justify-between items-center"
+            >
               {module} <img src={arrow} alt="arrow" className="w-5" />
             </h2>
           ))}
@@ -140,7 +145,10 @@ const CourseDetails = () => {
           <div className="flex flex-col gap-3">
             <h1 className="text-xl font-bold">Dylan Meringue</h1>
             <p className="text-blue-500 font-semibold">Back-End Development</p>
-            <p className="text-gray-600">This course is designed to give learners a clear and practical understanding of back-end development...</p>
+            <p className="text-gray-600">
+              This course is designed to give learners a clear and practical
+              understanding of back-end development...
+            </p>
           </div>
         </div>
       </div>
@@ -148,8 +156,15 @@ const CourseDetails = () => {
     Review: (
       <div className="px-6 md:px-12 my-6">
         {reviews.map((review, index) => (
-          <div key={index} className="flex flex-col md:flex-row items-start gap-4 mb-6">
-            <img src={review.image} alt={review.name} className="w-12 h-12 rounded-full object-cover" />
+          <div
+            key={index}
+            className="flex flex-col md:flex-row items-start gap-4 mb-6"
+          >
+            <img
+              src={review.image}
+              alt={review.name}
+              className="w-12 h-12 rounded-full object-cover"
+            />
             <div className="flex-1">
               <h1 className="text-lg font-bold">{review.name}</h1>
               <p className="text-sm text-gray-500">{review.date}</p>
@@ -164,18 +179,54 @@ const CourseDetails = () => {
           </div>
         ))}
       </div>
-    )
+    ),
   };
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
 
+  const addToCart = async (course) => {
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND}cart/add-to-cart`,
+        {
+          id: course.id,
+          title: course.title,
+          author: course.author,
+          rating: course.rating,
+          duration: course.duration,
+          lectures: course.lessons,
+          price: course.price,
+          image: course.image,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      // On success, show success toast
+      toast.success("Added to Cart");
+    } catch (error) {
+      console.error("Error:", error);
+      // On error, show error toast
+      const message =
+        error.response?.data?.message || error.message || "An error occurred";
+      toast.error(message);
+    }
+  };
+
   return (
     <>
       {/* Banner Image */}
       <div className="p-3">
-        <img src={course.image} alt="Course Banner" className="h-[50vh] md:h-[70vh] w-full object-cover rounded" />
+        <img
+          src={course.image}
+          alt="Course Banner"
+          className="h-[50vh] md:h-[70vh] w-full object-cover rounded"
+        />
       </div>
 
       {/* Course Info */}
@@ -194,7 +245,8 @@ const CourseDetails = () => {
             <div className="flex-1">
               <h3 className="text-gray-500">Review</h3>
               <div className="flex items-center gap-1 text-amber-300">
-                <FaStar /> <FaStar /> <FaStar /> <FaStar /> <FaRegStarHalfStroke />
+                <FaStar /> <FaStar /> <FaStar /> <FaStar />{" "}
+                <FaRegStarHalfStroke />
               </div>
             </div>
           </div>
@@ -228,14 +280,18 @@ const CourseDetails = () => {
           <img src={video} alt="Demo Video" className="rounded-md mb-6" />
           <div className="flex items-center justify-center mb-4">
             <MdCurrencyRupee className="h-6 w-6" />
-            <h2 className="text-2xl font-bold font-[Manrope]">{course.price}</h2>
+            <h2 className="text-2xl font-bold font-[Manrope]">
+              {course.price}
+            </h2>
           </div>
 
-          <button onClick={()=>{
-                addToCart(course)
-                toast("Added to Cart")
-              }}
-           className="cursor-pointer w-full bg-blue-700 text-white py-3 rounded-lg mb-6 hover:bg-blue-800">Add To Cart</button>
+          <button
+            onClick={() => addToCart(course)}
+            className="cursor-pointer w-full bg-blue-700 text-white py-3 rounded-lg mb-6 hover:bg-blue-800"
+          >
+            Add To Cart
+          </button>
+
           <div className="flex flex-col gap-2 text-gray-600">
             <p>✅ 62 hours on-demand video</p>
             <p>✅ Instructor: Dylan Meringue</p>
@@ -263,25 +319,15 @@ const CourseDetails = () => {
       {/* Recommended Courses */}
       <div className="px-6 md:px-12 my-20 text-center">
         <h2 className="text-blue-500 text-sm">Explore Recommended Courses</h2>
-        <h1 className="text-3xl md:text-4xl font-bold mb-4">You Might Also Like</h1>
-        <p className="text-gray-600 mb-12">Discover personalized course recommendations curated to match your interests and learning goals.</p>
+        <h1 className="text-3xl md:text-4xl font-bold mb-4">
+          You Might Also Like
+        </h1>
+        <p className="text-gray-600 mb-12">
+          Discover personalized course recommendations curated to match your
+          interests and learning goals.
+        </p>
 
-        {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {courses.map((course, index) => (
-            <CourseCard
-              key={index}
-              image={course.image}
-              duration={course.duration}
-              title={course.title}
-              description={course.description}
-              lessons={course.lessons}
-              rating={course.rating}
-              price={course.price}
-            />
-          ))}
-        </div> */}
-        
-        <Card all_course={all_course.slice(0,3)}/>
+        <Card all_course={all_course.slice(0, 3)} />
       </div>
     </>
   );
