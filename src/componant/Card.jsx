@@ -36,8 +36,8 @@ const CourseList = ({ all_course }) => {
 
 
   return (
-    <div className='px-4 sm:px-10 md:px-24 font-[Manrope]'>
-      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-10 gap-y-5'>
+    <div className='px-4 sm:px-10 lg:px-24 font-[Manrope]'>
+      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3  gap-x-10 gap-y-5'>
         {all_course.map((course) => (
           <div
             key={course.id}
