@@ -175,7 +175,7 @@ function Navbaar() {
                 {/* Dropdown Menu */}
                 {isDropdownOpen && (
                   <div className="absolute right-0 mt-2 w-40 bg-white border rounded-lg shadow-lg z-10">
-                    <p
+                    <button
                       onClick={() => {
                         handleLogout();
                         setIsDropdownOpen(false);
@@ -183,8 +183,8 @@ function Navbaar() {
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
                     >
                       Logout
-                    </p>
-                    <p
+                    </button>
+                    <button
                       onClick={() => {
                         // You can navigate to the dashboard here if needed
                         navigate('/dashboard');
@@ -193,7 +193,7 @@ function Navbaar() {
                       className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
                     >
                       Dashboard
-                    </p>
+                    </button>
                   </div>
                 )}
               </div>

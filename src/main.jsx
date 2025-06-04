@@ -32,6 +32,16 @@ import Blog from './pages/Blog.jsx';
 import BlogDetails from './pages/BlogDetails.jsx';
 import CourseDetails from './pages/courseDetails.jsx';
 import Dashboard from './componant/Dashboard.jsx';
+import Overview from './studentDashboard/StudentesPages/Overview.jsx';
+import Profile from './studentDashboard/StudentesPages/MyProfile.jsx';
+import EnrollCourse from './studentDashboard/StudentesPages/EnrollCourse.jsx';
+import StuWishlist from './studentDashboard/StudentesPages/stuWishlist.jsx';
+import Reviews from './studentDashboard/StudentesPages/Reviews.jsx';
+import MyQuiz from './studentDashboard/studentesPages/MyQuiz.jsx';
+import Message from './studentDashboard/StudentesPages/Message.jsx';
+import Assignment from './studentDashboard/StudentesPages/Assignments.jsx';
+import Settings from './studentDashboard/StudentesPages/Setting.jsx';
+import Logout from './studentDashboard/StudentesPages/LogOut.jsx';
 
 const router = createBrowserRouter([
   {
@@ -49,7 +59,20 @@ const router = createBrowserRouter([
       { path: 'courseDetailsOverview/:courseId', element: <CourseDetails /> }
     ]
   },
-  {path : '/dashboard' , element : <Dashboard/>}
+  {path : '/dashboard' , element : <Dashboard/>,
+    children:[
+     { index : true, element : <Overview/>,},
+     { path: "profile", element : <Profile/>},
+     { path: "enrollCourse", element : <EnrollCourse/>},
+     { path: "wishlist", element : <StuWishlist/>},
+     { path: "review" , element :  <Reviews/>},
+     { path: "myQuiz" , element :  <MyQuiz/>},
+     { path: "message" , element :  <Message/>},
+     { path: "assignments" , element :  <Assignment/>},
+     { path: "setting" , element :  <Settings/>},
+     { path: "logout" , element :  <Logout/>},
+    ],
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
