@@ -37,7 +37,7 @@ import Profile from './studentDashboard/StudentesPages/MyProfile.jsx';
 import EnrollCourse from './studentDashboard/StudentesPages/EnrollCourse.jsx';
 import StuWishlist from './studentDashboard/StudentesPages/stuWishlist.jsx';
 import Reviews from './studentDashboard/StudentesPages/Reviews.jsx';
-import MyQuiz from './studentDashboard/studentesPages/MyQuiz.jsx';
+import Quiz from "./studentDashboard/StudentesPages/MyQuiz.jsx"
 import Message from './studentDashboard/StudentesPages/Message.jsx';
 import Assignment from './studentDashboard/StudentesPages/Assignments.jsx';
 import Settings from './studentDashboard/StudentesPages/Setting.jsx';
@@ -66,7 +66,7 @@ const router = createBrowserRouter([
      { path: "enrollCourse", element : <EnrollCourse/>},
      { path: "wishlist", element : <StuWishlist/>},
      { path: "review" , element :  <Reviews/>},
-     { path: "myQuiz" , element :  <MyQuiz/>},
+     { path: "myQuiz" , element :  <Quiz/>},
      { path: "message" , element :  <Message/>},
      { path: "assignments" , element :  <Assignment/>},
      { path: "setting" , element :  <Settings/>},
