@@ -1,22 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import img1 from "../assets/image/img.jpg";
 import { FaArrowRight } from "react-icons/fa";
 import { PiBookOpenText, PiMedalDuotone } from 'react-icons/pi';
 
 const StuTopBar = () => {
+  const [user, setUser] = useState({ name: "Student" });
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
+
   return (
-    <div className="bg-gradient-to-r from-purple-500 to-blue-500 text-white px-6 py-10 rounded-xl flex flex-wrap md:flex-nowrap justify-between items-center gap-6 ">
-      
+    <div className="bg-gradient-to-r from-purple-500 to-blue-500 text-white px-6 py-10 rounded-xl flex flex-wrap md:flex-nowrap justify-between items-center gap-6">
       {/* Profile Section */}
       <div className="flex items-center gap-5">
         <img
           src={img1}
-          alt="Profile of student"
+          alt="Profile"
           className="rounded-full w-20 h-20 border-4 border-white"
         />
         <div>
-          <h2 className="text-xl font-semibold pb-2">Michelle Obama</h2>
-          
+          <h2 className="text-xl font-semibold pb-2">
+            {user?.name || "Student"}
+          </h2>
+
           <div className="flex flex-wrap gap-4 text-sm">
             <div className="flex items-center gap-2">
               <PiBookOpenText />

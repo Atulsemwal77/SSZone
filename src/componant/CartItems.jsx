@@ -7,20 +7,36 @@ import { toast } from "react-toastify";
 
 function CartItems() {
   const [cartItems, setCartItems] = useState([]);
-
   const [promoCode, setPromoCode] = useState("");
   const [applied, setApplied] = useState(false);
   const [discount, setDiscount] = useState(0);
 
+  const fetchData = async () => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      toast.error("Please login to add items to cart.");
+      return;
+    }
+
+    try {
+      const res = await axios.get(
+        `${import.meta.env.VITE_BACKEND}cart/cartItems`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setCartItems(res.data.data);
+    } catch (error) {
+      console.log("Error in fetching purchased cart items", error);
+    }
+  };
+
   useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_BACKEND}cart/cartItems`)
-      .then((res) => {
-        setCartItems(res.data.data);
-      })
-      .catch((err) => {
-        console.error("Error fetching cart items:", err);
-      });
+    fetchData();
   }, []);
 
   const subtotal = cartItems.reduce((acc, item) => acc + (item.price || 0), 0);
@@ -41,11 +57,25 @@ function CartItems() {
     setPromoCode("");
   };
 
-   const deleteItem = async (id) => {
+  const deleteItem = async (id) => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      toast.error("Please login to add items to cart.");
+      return;
+    }
     try {
-      await axios.delete(`${import.meta.env.VITE_BACKEND}cart/deleteCartItem/${id}`);
+      await axios.delete(
+        `${import.meta.env.VITE_BACKEND}cart/deleteCartItem/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
       toast.success("Item deleted!");
-      setCartItems(cartItems.filter(item => item._id !== id));
+      setCartItems(cartItems.filter((item) => item._id !== id));
     } catch (error) {
       console.error(error);
       toast.error("Failed to delete item");
@@ -112,102 +142,96 @@ function CartItems() {
             </div>
           ))}
         </div>
-        
+
         {cartItems.length === 0 ? (
-          <>
-          
-          </>
+          <></>
         ) : (
-        <>
-        <div className="w-full lg:w-[400px] space-y-6 my-10">
-          <div className="border border-[#E3E3E3] rounded-md p-6">
-            <h3 className="font-bold text-lg text-[#1A1A1A] pb-5">
-              Order Summary
-            </h3>
+          <>
+            <div className="w-full lg:w-[400px] space-y-6 my-10">
+              <div className="border border-[#E3E3E3] rounded-md p-6">
+                <h3 className="font-bold text-lg text-[#1A1A1A] pb-5">
+                  Order Summary
+                </h3>
 
-            <div className="flex justify-between pb-4">
-              <p className="font-semibold uppercase text-sm text-[#1A1A1A]">
-                Subtotal
-              </p>
-              <div className="flex items-center">
-                <MdCurrencyRupee className="text-[#232323]" />
-                <p className="font-semibold text-sm">{subtotal}</p>
-              </div>
-            </div>
-            <div className="flex justify-between pb-4">
-              <p className="font-normal uppercase text-sm text-[#1A1A1A]">
-                Promo Discount
-              </p>
-              <div className="flex items-center">
-                <MdCurrencyRupee className="text-[#232323]" />
-                <p className="text-sm">{discount}</p>
-              </div>
-            </div>
-            <div className="flex justify-between border-b pb-4 mb-5">
-              <p className="font-bold uppercase text-base text-[#1A1A1A]">
-                Total
-              </p>
-              <div className="flex items-center">
-                <MdCurrencyRupee className="text-[#232323]" />
-                <p className="font-bold text-sm">{total}</p>
-              </div>
-            </div>
-            <button className="w-full py-3 bg-[#296AD2] text-white font-medium rounded-md uppercase text-sm cursor-pointer">
-              Checkout
-            </button>
-          </div>
-
-          {/* Promotions */}
-          <div className="border border-[#E3E3E3] rounded-md p-6 space-y-5">
-            <h3 className="font-bold text-lg text-[#1A1A1A]">Promotions</h3>
-
-            {applied && (
-              <div className="border border-dashed border-[#296AD2] p-3 rounded-md flex justify-between items-center">
-                <p className="text-sm font-semibold">
-                  25BBUYVNJHV4774{" "}
-                  <span className="font-normal text-[#6F6F6F]">
-                    is applied
-                    <br />
-                    Udemy coupon
-                  </span>
-                </p>
-                <button
-                  onClick={removePromo}
-                  className="bg-[#EBF5FF] p-1 rounded"
-                >
-                  <IoMdClose className="text-[#296AD2] text-xl cursor-pointer" />
+                <div className="flex justify-between pb-4">
+                  <p className="font-semibold uppercase text-sm text-[#1A1A1A]">
+                    Subtotal
+                  </p>
+                  <div className="flex items-center">
+                    <MdCurrencyRupee className="text-[#232323]" />
+                    <p className="font-semibold text-sm">{subtotal}</p>
+                  </div>
+                </div>
+                <div className="flex justify-between pb-4">
+                  <p className="font-normal uppercase text-sm text-[#1A1A1A]">
+                    Promo Discount
+                  </p>
+                  <div className="flex items-center">
+                    <MdCurrencyRupee className="text-[#232323]" />
+                    <p className="text-sm">{discount}</p>
+                  </div>
+                </div>
+                <div className="flex justify-between border-b pb-4 mb-5">
+                  <p className="font-bold uppercase text-base text-[#1A1A1A]">
+                    Total
+                  </p>
+                  <div className="flex items-center">
+                    <MdCurrencyRupee className="text-[#232323]" />
+                    <p className="font-bold text-sm">{total}</p>
+                  </div>
+                </div>
+                <button className="w-full py-3 bg-[#296AD2] text-white font-medium rounded-md uppercase text-sm cursor-pointer">
+                  Checkout
                 </button>
               </div>
-            )}
 
-            {!applied && (
-              <div className="flex sm:flex-row flex-col gap-3">
-                <input
-                  type="text"
-                  placeholder="Enter Coupon"
-                  value={promoCode}
-                  onChange={(e) => setPromoCode(e.target.value)}
-                  className="flex-1 p-2 border border-[#DEE0E4] rounded-md text-sm"
-                />
-                <button
-                  onClick={applyPromo}
-                  className="py-2 px-5 bg-[#296AD2] text-white rounded-md text-sm font-medium cursor-pointer"
-                >
-                  Apply
-                </button>
+              {/* Promotions */}
+              <div className="border border-[#E3E3E3] rounded-md p-6 space-y-5">
+                <h3 className="font-bold text-lg text-[#1A1A1A]">Promotions</h3>
+
+                {applied && (
+                  <div className="border border-dashed border-[#296AD2] p-3 rounded-md flex justify-between items-center">
+                    <p className="text-sm font-semibold">
+                      25BBUYVNJHV4774{" "}
+                      <span className="font-normal text-[#6F6F6F]">
+                        is applied
+                        <br />
+                        Udemy coupon
+                      </span>
+                    </p>
+                    <button
+                      onClick={removePromo}
+                      className="bg-[#EBF5FF] p-1 rounded"
+                    >
+                      <IoMdClose className="text-[#296AD2] text-xl cursor-pointer" />
+                    </button>
+                  </div>
+                )}
+
+                {!applied && (
+                  <div className="flex sm:flex-row flex-col gap-3">
+                    <input
+                      type="text"
+                      placeholder="Enter Coupon"
+                      value={promoCode}
+                      onChange={(e) => setPromoCode(e.target.value)}
+                      className="flex-1 p-2 border border-[#DEE0E4] rounded-md text-sm"
+                    />
+                    <button
+                      onClick={applyPromo}
+                      className="py-2 px-5 bg-[#296AD2] text-white rounded-md text-sm font-medium cursor-pointer"
+                    >
+                      Apply
+                    </button>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-        </div>
-        </>) }
-
-
-        
-        
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
 }
 
 export default CartItems;
-

@@ -40,9 +40,9 @@ export default function StuSidebar() {
 
   return (
     <>
-    <div className="flex md:flex-row bg-red-100 font-sans min-h-screen  border-r  ">
+    <div className="flex md:flex-row bg-red-100 font-sans min-h-screen  border-r  relative ">
       {/* Mobile Header */}
-      <div className="flex items-center justify-between bg-white p-4 shadow-md md:hidden w-full ">
+      <div className="flex items-center justify-between  p-4 shadow-md md:hidden w-full absolute ">
         <button onClick={toggleSidebar}>
           {sidebarOpen ? <MdClose size={24} /> : <MdMenu size={24} />}
         </button>

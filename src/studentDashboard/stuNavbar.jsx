@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState , useEffect} from 'react';
 import logo from "../assets/image/logo.png";
 import { FaSearch } from 'react-icons/fa';
 import {Link } from "react-router-dom"
 
 export default function StuNavbar() {
+  
+
   return (
     <div className=" bg-white px-4 md:px-6 py-4 shadow flex justify-between items-center w-full sticky top-0 z-50  ">
       
