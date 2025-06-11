@@ -29,27 +29,27 @@ function Navbaar() {
       .catch((err) => console.error("Cart error:", err));
   };
 
-  const fetchWishlist = () => {
-    axios
-      .get(`${import.meta.env.VITE_BACKEND}wishlist/wishlistItems`)
-      .then((res) => setWishlist(res.data.data))
-      .catch((err) => console.error("Wishlist error:", err));
-  };
+  // const fetchWishlist = () => {
+  //   axios
+  //     .get(`${import.meta.env.VITE_BACKEND}wishlist/wishlistItems`)
+  //     .then((res) => setWishlist(res.data.data))
+  //     .catch((err) => console.error("Wishlist error:", err));
+  // };
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
       fetchCart();
-      fetchWishlist();
+      // fetchWishlist();
     }
 
     window.addEventListener("cart-updated", fetchCart);
-    window.addEventListener("wishlist-updated", fetchWishlist);
+    // window.addEventListener("wishlist-updated", fetchWishlist);
 
     return () => {
       window.removeEventListener("cart-updated", fetchCart);
-      window.removeEventListener("wishlist-updated", fetchWishlist);
+      // window.removeEventListener("wishlist-updated", fetchWishlist);
     };
   }, []);
 
@@ -74,7 +74,7 @@ function Navbaar() {
       toast.success("Login Successful");
       setShowLogin(false);
       fetchCart();
-      fetchWishlist();
+      // fetchWishlist();
     } catch (err) {
       toast.error(err.response?.data?.message || "Login failed");
     }
