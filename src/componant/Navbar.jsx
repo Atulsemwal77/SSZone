@@ -29,13 +29,7 @@ function Navbaar() {
       .catch((err) => console.error("Cart error:", err));
   };
 
-  // const fetchWishlist = () => {
-  //   axios
-  //     .get(`${import.meta.env.VITE_BACKEND}wishlist/wishlistItems`)
-  //     .then((res) => setWishlist(res.data.data))
-  //     .catch((err) => console.error("Wishlist error:", err));
-  // };
-
+  
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
@@ -152,6 +146,8 @@ function Navbaar() {
               <div onClick={() => setIsDropdownOpen(!isDropdownOpen)} className="cursor-pointer">
                 <div className="flex items-center gap-1">
                   <span className="text-sm text-gray-700">Hello, <br /><i>{user.name}</i></span>
+                  {/* <span className="text-sm text-gray-700">Hello, <br /><i>{user.email}</i></span>
+                  <span className="text-sm text-gray-700">Hello, <br /><i>{user.user}</i></span> */}
                   <FaChevronDown className="w-2" />
                 </div>
               </div>

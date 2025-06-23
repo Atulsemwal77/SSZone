@@ -24,7 +24,9 @@ const StuTopBar = () => {
         />
         <div>
           <h2 className="text-xl font-semibold pb-2">
-            {user?.name || "Student"}
+            {/* {user?.name || "Student"} */}
+            {user?.name && user.name.charAt(0).toUpperCase() + user.name.slice(1).toLowerCase()}
+
           </h2>
 
           <div className="flex flex-wrap gap-4 text-sm">
